@@ -32,19 +32,19 @@
 
         <nav class="bottom-nav fixed-bottom text-white mt-5">
             <div class="container d-flex justify-content-around py-3">
-                <a href="#" class="nav-item" onclick="openContactModal()">
+                <a href="#" class="nav-item" onclick="openModal('contact')">
                     <i class="bx bx-xl bx-phone"></i>
                     <span>Contact</span>
                 </a>
-                <a href="#" class="nav-item" onclick="openRSVPModal()">
+                <a href="#" class="nav-item" onclick="openModal('rsvp')">
                     <i class="bx bx-xl bx-clipboard"></i>
                     <span>RSVP</span>
                 </a>
-                <a href="#" class="nav-item" onclick="openLocationModal()">
+                <a href="#" class="nav-item" onclick="openModal('location')">
                     <i class="bx bx-xl bx-map"></i>
                     <span>Location</span>
                 </a>
-                <a href="#" class="nav-item" onclick="openCalendarModal()">
+                <a href="#" class="nav-item" onclick="openModal('calendar')">
                     <i class="bx bx-xl bx-calendar-event"></i>
                     <span>Calendar</span>
                 </a>
@@ -236,29 +236,16 @@
         </div>
     </div>
 
-    <div class="modal fade" id="rsvpModal" tabindex="-1" aria-labelledby="rsvpModalLabel" aria-hidden="true"
+    <div class="modal fade" id="dynamicModal" tabindex="-1" aria-labelledby="dynamicModalLabel" aria-hidden="true"
         data-bs-backdrop="true">
         <div class="modal-dialog modal-dialog-bottom">
             <div class="modal-content modal-content-bottom">
                 <div class="modal-header border-0 pb-0">
-                    <h5 class="modal-title text-center w-100" id="rsvpModalLabel">RSVP</h5>
+                    <h5 class="modal-title text-center w-100" id="dynamicModalLabel">Modal Title</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body text-center">
-                    <div class="row g-2 mb-4">
-                        <div class="col-6">
-                            <button class="btn btn-success w-100 rsvp-btn" data-status="hadir">
-                                <i class="bx bx-check"></i>
-                                Hadir
-                            </button>
-                        </div>
-                        <div class="col-6">
-                            <button class="btn btn-outline-secondary w-100 rsvp-btn" data-status="tidak-hadir">
-                                <i class="bx bx-x"></i>
-                                Tidak Hadir
-                            </button>
-                        </div>
-                    </div>
+                <div class="modal-body text-center" id="dynamicModalContent">
+                    <!-- Dynamic content will be inserted here -->
                 </div>
             </div>
         </div>
