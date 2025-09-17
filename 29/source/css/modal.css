@@ -1,0 +1,53 @@
+.modal-dialog-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  max-width: 420px;
+  width: 92%;
+  z-index: 1040; /* Lower than navbar */
+}
+
+.modal-content-bottom {
+  border-radius: 20px 20px 20px 20px;
+  border: none;
+  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
+  background: white;
+  margin: 0;
+  bottom: 90px;
+}
+
+.modal-content-bottom .modal-header {
+  padding: 1.5rem 1rem 0.5rem;
+}
+
+.modal-content-bottom .modal-body {
+  padding: 1rem 1.5rem 1rem; /* Reduced bottom padding since we added it to modal-content */
+}
+
+/* Modal backdrop */
+.modal-backdrop.show {
+  display: none;
+}
+
+/* Animation */
+.modal.fade .modal-dialog-bottom {
+  transform: translateY(100%);
+  transition: transform 0.3s ease-out;
+}
+
+.modal.show .modal-dialog-bottom {
+  transform: translateY(0);
+}
+
+/* Ensure the modal doesn't go above the navbar */
+.modal-dialog-bottom {
+  max-height: calc(100vh - 80px); /* Adjust based on your navbar height */
+}
+
+/* Make sure the content is scrollable if needed */
+.modal-content-bottom {
+  max-height: inherit;
+  overflow-y: auto;
+}
