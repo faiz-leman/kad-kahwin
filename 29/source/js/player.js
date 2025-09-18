@@ -1,12 +1,11 @@
 class MusicPlayer {
   constructor() {
-    this.YOUTUBE_VIDEO_ID = "GAf2DQPYvGE";
     this.TITLE = "Bermuara – Mahalini & Rizky Febian";
 
     this.musicBtn = document.getElementById("musicBtn");
     this.musicVisualizer = document.getElementById("musicVisualizer");
+    this.audioPlayer = document.getElementById("audio");
     this.playing = false;
-    this.player = null;
     this.visualizerInterval = null;
     this.userInteracted = false;
 
@@ -14,15 +13,42 @@ class MusicPlayer {
   }
 
   init() {
-    this.loadYouTubeAPI();
+    this.setupAudioPlayer();
     this.musicBtn.addEventListener("click", () => this.toggle());
 
     // Add user interaction listeners
     this.addInteractionListeners();
   }
 
+  setupAudioPlayer() {
+    if (!this.audioPlayer) {
+      console.error("Audio element not found");
+      return;
+    }
+
+    // Set audio properties
+    this.audioPlayer.loop = true;
+    this.audioPlayer.preload = "auto";
+
+    // Add event listeners
+    this.audioPlayer.addEventListener("play", () => this.setPlaying(true));
+    this.audioPlayer.addEventListener("pause", () => this.setPlaying(false));
+    this.audioPlayer.addEventListener("ended", () => this.setPlaying(false));
+
+    // Handle loading events
+    this.audioPlayer.addEventListener("canplaythrough", () => {
+      console.log("Audio ready to play");
+      if (this.userInteracted) {
+        this.tryAutoplay();
+      }
+    });
+
+    // Try autoplay immediately (will only work after user interaction)
+    this.tryAutoplay();
+  }
+
   addInteractionListeners() {
-    const interactionEvents = ["click", "touchstart", "keydown"];
+    const interactionEvents = ["click", "touchstart", "keydown", "scroll"];
 
     interactionEvents.forEach((event) => {
       document.addEventListener(
@@ -33,81 +59,54 @@ class MusicPlayer {
             this.tryAutoplay();
           }
         },
-        { once: true }
+        { once: true, passive: true }
       );
     });
   }
 
-  tryAutoplay() {
-    if (this.player && this.player.playVideo && !this.playing) {
-      setTimeout(() => {
-        this.player.playVideo().catch((error) => {
-          console.log("Autoplay failed:", error);
-        });
-      }, 1000);
-    }
-  }
+  async tryAutoplay() {
+    if (!this.audioPlayer || this.playing) return;
 
-  loadYouTubeAPI() {
-    const tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName("script")[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    try {
+      // Small delay to ensure audio is ready
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
-    window.onYouTubeIframeAPIReady = () => {
-      this.player = new YT.Player("youtube-player", {
-        height: "1",
-        width: "1",
-        videoId: this.YOUTUBE_VIDEO_ID,
-        playerVars: {
-          autoplay: 0, // Disable initial autoplay
-          controls: 0,
-          disablekb: 1,
-          fs: 0,
-          modestbranding: 1,
-          rel: 0,
-          showinfo: 0,
-          loop: 1,
-          playlist: this.YOUTUBE_VIDEO_ID,
-          origin: window.location.origin,
-          enablejsapi: 1,
-        },
-        events: {
-          onReady: (event) => this.onPlayerReady(event),
-          onStateChange: (event) => this.onPlayerStateChange(event),
-        },
-      });
-    };
-  }
-
-  onPlayerReady(event) {
-    console.log("YouTube player ready");
-    // Try autoplay if user has already interacted
-    if (this.userInteracted) {
-      this.tryAutoplay();
-    }
-  }
-
-  onPlayerStateChange(event) {
-    if (event.data === YT.PlayerState.PLAYING) {
-      this.setPlaying(true);
-    } else if (
-      event.data === YT.PlayerState.PAUSED ||
-      event.data === YT.PlayerState.ENDED
-    ) {
-      this.setPlaying(false);
+      if (this.audioPlayer.readyState >= 3) {
+        // HAVE_FUTURE_DATA or better
+        await this.audioPlayer.play();
+        console.log("Autoplay successful");
+      } else {
+        // If not ready, wait for it to be ready
+        this.audioPlayer.addEventListener(
+          "canplaythrough",
+          async () => {
+            try {
+              await this.audioPlayer.play();
+              console.log("Delayed autoplay successful");
+            } catch (error) {
+              console.log("Delayed autoplay failed:", error);
+            }
+          },
+          { once: true }
+        );
+      }
+    } catch (error) {
+      console.log("Autoplay failed:", error);
+      // Autoplay was prevented, wait for user interaction
     }
   }
 
   toggle() {
-    if (!this.player) return;
+    if (!this.audioPlayer) return;
 
     this.userInteracted = true;
 
     if (this.playing) {
-      this.player.pauseVideo();
+      this.audioPlayer.pause();
     } else {
-      this.player.playVideo();
+      this.audioPlayer.play().catch((error) => {
+        console.log("Play failed:", error);
+      });
     }
   }
 
@@ -169,7 +168,7 @@ class MusicPlayer {
         const height = minHeight + (maxHeight - minHeight) * intensity;
         bar.style.height = `${height}px`;
       });
-    }, 100); // Update every 100ms for smooth animation
+    }, 100);
   }
 
   stopDynamicVisualizer() {
