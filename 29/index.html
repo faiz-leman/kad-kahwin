@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="source/css/navbar.css">
     <link rel="stylesheet" href="source/css/fonts.css">
     <link rel="stylesheet" href="source/css/modal.css">
+    <link rel="stylesheet" href="source/css/player.css">
 
     <!-- AOS -->
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
@@ -68,6 +69,21 @@
 
 
         <div class="text-center text-white my-4 py-4">
+
+            <div class="music-bar minimal">
+                <!-- Hidden YouTube player -->
+                <div id="youtube-player" class="youtube-player"></div>
+                <button id="musicBtn" class="music-btn" title="Bermuara – Mahalini & Rizky Febian" aria-label="Play">
+                    <div id="musicVisualizer" class="music-visualizer">
+                        <div class="visualizer-bar"></div>
+                        <div class="visualizer-bar"></div>
+                        <div class="visualizer-bar"></div>
+                        <div class="visualizer-bar"></div>
+                        <div class="visualizer-bar"></div>
+                    </div>
+                    <span class="music-title-visible">Bermuara – Mahalini & Rizky Febian</span>
+                </button>
+            </div>
             <section class="fade-in px-2">
                 <p>Assalamualaikum WBT & Salam Sejahtera</p>
                 <p>Dengan penuh kesyukuran, kami</p>
@@ -102,14 +118,14 @@
                 </p>
 
                 <h5 class="section-title text-light">TARIKH</h5>
-                <p style="margin: 0%;">Sabtu, 29 November 2025</p>
+                <p>Sabtu, 29 November 2025</p>
                 <p class="fst-italic">8 Jamadilakhir 1447H</p>
 
                 <h5 class="section-title text-light">WAKTU</h5>
                 <p>11:00 pagi - 04:00 petang</p>
 
                 <div>
-                    <button class="btn btn-outline-light my-2">Simpan Tarikh</button>
+                    <button class="btn btn-outline-light my-2" onclick="openModal('calendar')">Simpan Tarikh</button>
                 </div>
 
             </section>
@@ -178,12 +194,10 @@
                         </li>
                     </ul>
                 </div>
-                <div class="row g-2 mt-4">
+                <div class="row g-2 mt-4 d-flex justify-content-center">
                     <div class="col-6">
-                        <button class="btn btn-outline-light w-100" type="button">Sahkan Kehadiran</button>
-                    </div>
-                    <div class="col-6">
-                        <button class="btn btn-outline-light w-100" type="button">Tulis Ucapan</button>
+                        <button class="btn btn-outline-light w-100" onclick="openModal('rsvp')">Tulis
+                            Ucapan</button>
                     </div>
                 </div>
             </section>
@@ -192,27 +206,27 @@
                 <h5 class="section-title section-title--primary">MENGHITUNG HARI</h5>
                 <div class="row justify-content-center g-3">
                     <div class="col-3 col-sm-3">
-                        <div class="countdown-card p-md shadow-sm rounded-md text-center bg-white">
+                        <div class="countdown-card p-md shadow-sm rounded-md text-center">
                             <div class="countdown-card__number text-primary" id="days">0</div>
-                            <p class="countdown-card__label">Hari</p>
+                            <p class="countdown-card__label text-white">Hari</p>
                         </div>
                     </div>
                     <div class="col-3 col-sm-3">
-                        <div class="countdown-card p-md shadow-sm rounded-md text-center bg-white">
+                        <div class="countdown-card p-md shadow-sm rounded-md text-center">
                             <div class="countdown-card__number text-primary" id="hours">0</div>
-                            <p class="countdown-card__label">Jam</p>
+                            <p class="countdown-card__label text-white">Jam</p>
                         </div>
                     </div>
                     <div class="col-3 col-sm-3">
-                        <div class="countdown-card p-md shadow-sm rounded-md text-center bg-white">
+                        <div class="countdown-card p-md shadow-sm rounded-md text-center">
                             <div class="countdown-card__number text-primary" id="minutes">0</div>
-                            <p class="countdown-card__label">Minit</p>
+                            <p class="countdown-card__label text-white">Minit</p>
                         </div>
                     </div>
                     <div class="col-3 col-sm-3">
-                        <div class="countdown-card p-md shadow-sm rounded-md text-center bg-white">
+                        <div class="countdown-card p-md shadow-sm rounded-md text-center">
                             <div class="countdown-card__number text-primary" id="seconds">0</div>
-                            <p class="countdown-card__label">Saat</p>
+                            <p class="countdown-card__label text-white">Saat</p>
                         </div>
                     </div>
                 </div>
@@ -236,8 +250,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="dynamicModal" tabindex="-1" aria-labelledby="dynamicModalLabel" aria-hidden="true"
-        data-bs-backdrop="true">
+    <div class="modal fade" id="dynamicModal" tabindex="-1" aria-labelledby="dynamicModalLabel" data-bs-backdrop="true">
         <div class="modal-dialog modal-dialog-bottom">
             <div class="modal-content modal-content-bottom">
                 <div class="modal-header border-0 pb-0">
@@ -257,6 +270,7 @@
     <!-- Countdown Timer Script -->
     <script src="source/js/main.js"></script>
     <script src="source/js/modal.js"></script>
+    <script src="source/js/player.js"></script>
 
     <!-- AOS JavaScript -->
     <script src="https://unpkg.aos@2.3.4/dist/aos.js"></script>

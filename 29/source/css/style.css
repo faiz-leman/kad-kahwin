@@ -273,8 +273,8 @@ body {
 
 /* Countdown Card */
 .countdown-card {
-  background: var(--white);
-  border: 1px solid #e0e0e0;
+  /* background: var(--white); */
+  /* border: 1px solid #e0e0e0; */
   border-radius: var(--radius-md);
   padding: var(--spacing-md);
   box-shadow: var(--shadow-sm);
