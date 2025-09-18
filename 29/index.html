@@ -13,20 +13,38 @@
     <link rel="stylesheet" href="source/css/fonts.css">
     <link rel="stylesheet" href="source/css/modal.css">
     <link rel="stylesheet" href="source/css/player.css">
+    <link rel="stylesheet" href="source/css/envelope.css">
 
     <!-- AOS -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+    <link rel="stylesheet" href="https://unpkg.aos@2.3.4/dist/aos.css" />
     <link rel="stylesheet" href="plugins/boxicons/basic/boxicons.min.css">
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
 </head>
 
-
-
 <body data-aos-easing="slide" data-aos-duration="400" data-aos-delay="0">
+    <!-- Envelope Container -->
+    <div id="envelope-container" class="envelope-container">
+        <div class="envelope">
+            <div class="envelope-back"></div>
+            <div class="envelope-front">
+                <div class="envelope-content">
+                    <div class="envelope-seal">
+                        <div class="couple-initials">
+                            <span class="initial-name">Haidah</span>
+                            <span class="initial-name">Amsyar</span>
+                            <button id="open-btn" class="open-button">BUKA</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="envelope-flap"></div>
+        </div>
+    </div>
+
     <!-- Main Content -->
-    <div class="main-content bg-dark-blue fade-in">
+    <div id="main-content" class="main-content bg-dark-blue fade-in" style="display: none;">
         <!-- Music Player (you'll need to implement this separately) -->
 
         <!--/ Music Player -->
@@ -66,8 +84,6 @@
                 </div>
             </div>
         </section>
-
-
 
         <div class="text-center text-white my-4 py-4">
 
@@ -275,6 +291,7 @@
     <script src="source/js/main.js"></script>
     <script src="source/js/modal.js"></script>
     <script src="source/js/player.js"></script>
+    <script src="source/js/envelope.js"></script>
 
     <!-- AOS JavaScript -->
     <script src="https://unpkg.aos@2.3.4/dist/aos.js"></script>
