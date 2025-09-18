@@ -8,6 +8,7 @@ class MusicPlayer {
     this.playing = false;
     this.player = null;
     this.visualizerInterval = null;
+    this.userInteracted = false;
 
     this.init();
   }
@@ -15,6 +16,36 @@ class MusicPlayer {
   init() {
     this.loadYouTubeAPI();
     this.musicBtn.addEventListener("click", () => this.toggle());
+
+    // Add user interaction listeners
+    this.addInteractionListeners();
+  }
+
+  addInteractionListeners() {
+    const interactionEvents = ["click", "touchstart", "keydown"];
+
+    interactionEvents.forEach((event) => {
+      document.addEventListener(
+        event,
+        () => {
+          if (!this.userInteracted) {
+            this.userInteracted = true;
+            this.tryAutoplay();
+          }
+        },
+        { once: true }
+      );
+    });
+  }
+
+  tryAutoplay() {
+    if (this.player && this.player.playVideo && !this.playing) {
+      setTimeout(() => {
+        this.player.playVideo().catch((error) => {
+          console.log("Autoplay failed:", error);
+        });
+      }, 1000);
+    }
   }
 
   loadYouTubeAPI() {
@@ -29,7 +60,7 @@ class MusicPlayer {
         width: "1",
         videoId: this.YOUTUBE_VIDEO_ID,
         playerVars: {
-          autoplay: 1,
+          autoplay: 0, // Disable initial autoplay
           controls: 0,
           disablekb: 1,
           fs: 0,
@@ -39,6 +70,7 @@ class MusicPlayer {
           loop: 1,
           playlist: this.YOUTUBE_VIDEO_ID,
           origin: window.location.origin,
+          enablejsapi: 1,
         },
         events: {
           onReady: (event) => this.onPlayerReady(event),
@@ -50,6 +82,10 @@ class MusicPlayer {
 
   onPlayerReady(event) {
     console.log("YouTube player ready");
+    // Try autoplay if user has already interacted
+    if (this.userInteracted) {
+      this.tryAutoplay();
+    }
   }
 
   onPlayerStateChange(event) {
@@ -65,6 +101,8 @@ class MusicPlayer {
 
   toggle() {
     if (!this.player) return;
+
+    this.userInteracted = true;
 
     if (this.playing) {
       this.player.pauseVideo();
