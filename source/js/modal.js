@@ -127,18 +127,16 @@ function showRSVPForm(choice) {
   if (choice === "hadir") {
     // Attendance confirmation form
     formContent = `
+    <form id="rsvpForm">
+      <input type="hidden" id="rsvpChoice" name="rsvpChoice" value="y">
       <div class="rsvp-form">
         <div class="mb-3">
           <label for="guestName" class="form-label text-start d-block">Nama</label>
-          <input type="text" class="form-control" id="guestName" required>
-        </div>
-        <div class="mb-3">
-          <label for="guestPhone" class="form-label text-start d-block">Nombor Telefon</label>
-          <input type="tel" class="form-control" id="guestPhone" required>
+          <input type="text" class="form-control" name="guestName" id="guestName" required>
         </div>
         <div class="mb-3">
           <label for="attendeeCount" class="form-label text-start d-block">Jumlah Kehadiran</label>
-          <select class="form-control" id="attendeeCount" required>
+          <select class="form-control" name="attendeesPax" id="attendeeCount" required>
             <option value="">1 orang</option>
             <option value="1">1 orang</option>
             <option value="2">2 orang</option>
@@ -149,7 +147,7 @@ function showRSVPForm(choice) {
         </div>
         <div class="mb-3">
           <label for="guestMessage" class="form-label text-start d-block">Ucapan</label>
-          <textarea class="form-control" id="guestMessage" rows="3"></textarea>
+          <textarea class="form-control" name="guestWish" id="guestMessage" rows="3"></textarea>
         </div>
         <div class="row g-2">
           <div class="col-6">
@@ -164,18 +162,21 @@ function showRSVPForm(choice) {
           </div>
         </div>
       </div>
+    </form>
     `;
   } else {
     // Just wish form for tidak hadir
     formContent = `
+    <form id="rsvpForm">
+      <input type="hidden" id="rsvpChoice" name="rsvpChoice" value="n">
       <div class="rsvp-form">
         <div class="mb-3">
           <label for="guestName" class="form-label text-start d-block">Nama</label>
-          <input type="text" class="form-control" id="guestName" required>
+          <input type="text" class="form-control" name="guestName" id="guestName" required>
         </div>
         <div class="mb-3">
           <label for="guestMessage" class="form-label text-start d-block">Ucapan</label>
-          <textarea class="form-control" id="guestMessage" rows="3" required></textarea>
+          <textarea class="form-control" name="guestWish" id="guestMessage" rows="3" required></textarea>
         </div>
         <div class="row g-2">
           <div class="col-6">
