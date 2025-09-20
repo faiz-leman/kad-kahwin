@@ -5,20 +5,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Walimaturus | Faiz & Syukriah</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="source/css/style.css">
-    <link rel="stylesheet" href="source/css/navbar.css">
-    <link rel="stylesheet" href="source/css/fonts.css">
-    <link rel="stylesheet" href="source/css/modal.css">
-    <link rel="stylesheet" href="source/css/player.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://www.kahwinnow.com/img/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://www.kahwinnow.com/img/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://www.kahwinnow.com/img/favicon.ico">
 
-    <!-- AOS -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
-    <link rel="stylesheet" href="plugins/boxicons/basic/boxicons.min.css">
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://unpkg.com">
+    <link rel="preconnect" href="https://www.thekahwin.my">
 
+    <!-- External Libraries with defer -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <!-- Critical CSS - load immediately -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="source/css/style.css">
+    <link rel="stylesheet" href="source/css/fonts.css">
+
+    <!-- Non-critical CSS - load asynchronously -->
+    <link rel="preload" href="source/css/navbar.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="source/css/modal.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="source/css/player.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://unpkg.com/aos@2.3.4/dist/aos.css" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+
+    <!-- Fallback for browsers that don't support preload -->
+    <noscript>
+        <link rel="stylesheet" href="source/css/navbar.css">
+        <link rel="stylesheet" href="source/css/modal.css">
+        <link rel="stylesheet" href="source/css/player.css">
+        <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+        <link rel="stylesheet" href="plugins/boxicons/basic/boxicons.min.css">
+    </noscript>
+
+
 
 </head>
 
@@ -27,26 +52,24 @@
 <body data-aos-easing="slide" data-aos-duration="400" data-aos-delay="0">
     <!-- Main Content -->
     <div class="main-content bg-dark-blue fade-in">
-        <!-- Music Player (you'll need to implement this separately) -->
 
-        <!--/ Music Player -->
         <div id="particles-js" class="particles-container"></div>
 
         <nav class="bottom-nav fixed-bottom text-white mt-5">
             <div class="container d-flex justify-content-around py-3">
-                <a href="#" class="nav-item" onclick="openModal('contact')">
+                <a href="javascript:void(0)" class="nav-item" onclick="openModal('contact')">
                     <i class="bx bx-xl bx-phone"></i>
                     <span>Contact</span>
                 </a>
-                <a href="#" class="nav-item" onclick="openModal('rsvp')">
+                <a href="javascript:void(0)" class="nav-item" onclick="openModal('rsvp')">
                     <i class="bx bx-xl bx-clipboard"></i>
                     <span>RSVP</span>
                 </a>
-                <a href="#" class="nav-item" onclick="openModal('location')">
+                <a href="javascript:void(0)" class="nav-item" onclick="openModal('location')">
                     <i class="bx bx-xl bx-map"></i>
                     <span>Location</span>
                 </a>
-                <a href="#" class="nav-item" onclick="openModal('calendar')">
+                <a href="javascript:void(0)" class="nav-item" onclick="openModal('calendar')">
                     <i class="bx bx-xl bx-calendar-event"></i>
                     <span>Calendar</span>
                 </a>
@@ -73,9 +96,8 @@
 
             <div class="music-bar minimal">
                 <!-- Hidden YouTube player -->
-                <audio controls="" loop="" id="audio" controlslist="nodownload" class="hidden">
-                    <source src="https://www.kahwinnow.com/storage/music/DU3DX3V6TwSmDSD3TR2E6BgFUDM3Rgss8etiVGUx.mp3"
-                        type="audio/mpeg">
+                <audio id="audio" class="hidden" preload="none" loading="lazy">
+                    <source src="source/audio/bermuara.mp3" type="audio/mp3">
                 </audio>
                 <button id="musicBtn" class="music-btn" title="Bermuara – Mahalini & Rizky Febian" aria-label="Play">
                     <div id="musicVisualizer" class="music-visualizer">
@@ -238,7 +260,9 @@
 
             <section class="fade-in">
                 <div class="gallery my-4 py-2">
-                    <img src="https://www.thekahwin.my/assets/img/dummy/dummy5.webp" alt="gambar">
+                    <img src="https://www.thekahwin.my/assets/img/dummy/dummy5.webp"
+                        alt="Wedding photo of Faiz and Syukriah" loading="lazy" decoding="async" width="300"
+                        height="400">
                     <p>Artwork by <a href="#" class="brand text-primary fw-bold">The Kahwin</a></p>
                 </div>
             </section>
@@ -272,9 +296,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Countdown Timer Script -->
-    <script src="source/js/main.js"></script>
-    <script src="source/js/modal.js"></script>
-    <script src="source/js/player.js"></script>
+    <script src="source/js/main.js" defer></script>
+    <script src="source/js/modal.js" defer></script>
+    <script src="source/js/player.js" defer></script>
 
     <!-- AOS JavaScript -->
     <script src="https://unpkg.aos@2.3.4/dist/aos.js"></script>

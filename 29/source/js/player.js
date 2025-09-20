@@ -22,7 +22,7 @@ class MusicPlayer {
 
   setupAudioPlayer() {
     if (!this.audioPlayer) {
-      console.error("Audio element not found");
+      // console.error("Audio element not found");
       return;
     }
 
@@ -37,7 +37,7 @@ class MusicPlayer {
 
     // Handle loading events
     this.audioPlayer.addEventListener("canplaythrough", () => {
-      console.log("Audio ready to play");
+      // console.log("Audio ready to play");
       if (this.userInteracted) {
         this.tryAutoplay();
       }
@@ -74,7 +74,7 @@ class MusicPlayer {
       if (this.audioPlayer.readyState >= 3) {
         // HAVE_FUTURE_DATA or better
         await this.audioPlayer.play();
-        console.log("Autoplay successful");
+        // console.log("Autoplay successful");
       } else {
         // If not ready, wait for it to be ready
         this.audioPlayer.addEventListener(
@@ -82,16 +82,16 @@ class MusicPlayer {
           async () => {
             try {
               await this.audioPlayer.play();
-              console.log("Delayed autoplay successful");
+              // console.log("Delayed autoplay successful");
             } catch (error) {
-              console.log("Delayed autoplay failed:", error);
+              // console.log("Delayed autoplay failed:", error);
             }
           },
           { once: true }
         );
       }
     } catch (error) {
-      console.log("Autoplay failed:", error);
+      // console.log("Autoplay failed:", error);
       // Autoplay was prevented, wait for user interaction
     }
   }
@@ -105,7 +105,7 @@ class MusicPlayer {
       this.audioPlayer.pause();
     } else {
       this.audioPlayer.play().catch((error) => {
-        console.log("Play failed:", error);
+        // console.log("Play failed:", error);
       });
     }
   }

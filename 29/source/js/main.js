@@ -1,3 +1,15 @@
+// Cache DOM elements for better performance
+let countdownElements = null;
+
+function initializeCountdown() {
+  countdownElements = {
+    days: document.getElementById("days"),
+    hours: document.getElementById("hours"),
+    minutes: document.getElementById("minutes"),
+    seconds: document.getElementById("seconds"),
+  };
+}
+
 function updateCountdown() {
   const weddingDate = new Date("2025-11-29T11:00:00");
   const now = new Date();
@@ -9,20 +21,35 @@ function updateCountdown() {
     const minutes = Math.floor((difference / 1000 / 60) % 60);
     const seconds = Math.floor((difference / 1000) % 60);
 
-    document.getElementById("days").textContent = days;
-    document.getElementById("hours").textContent = hours;
-    document.getElementById("minutes").textContent = minutes;
-    document.getElementById("seconds").textContent = seconds;
+    if (countdownElements) {
+      countdownElements.days.textContent = days;
+      countdownElements.hours.textContent = hours;
+      countdownElements.minutes.textContent = minutes;
+      countdownElements.seconds.textContent = seconds;
+    }
   } else {
-    document.getElementById("days").textContent = 0;
-    document.getElementById("hours").textContent = 0;
-    document.getElementById("minutes").textContent = 0;
-    document.getElementById("seconds").textContent = 0;
+    if (countdownElements) {
+      countdownElements.days.textContent = 0;
+      countdownElements.hours.textContent = 0;
+      countdownElements.minutes.textContent = 0;
+      countdownElements.seconds.textContent = 0;
+    }
   }
 }
 
-// Update countdown every second
-setInterval(updateCountdown, 1000);
+// Initialize when DOM is ready
+document.addEventListener("DOMContentLoaded", function () {
+  initializeCountdown();
+  updateCountdown();
 
-// Initialize countdown immediately
-updateCountdown();
+  // Update countdown every second
+  setInterval(updateCountdown, 1000);
+
+  // Initialize AOS if available
+  if (typeof AOS !== "undefined") {
+    AOS.init({
+      duration: 800,
+      once: true,
+    });
+  }
+});
