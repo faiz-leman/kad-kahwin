@@ -24,21 +24,21 @@
     <!-- Critical CSS - load immediately -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="source/css/style.css">
-    <link rel="stylesheet" href="source/css/fonts.css">
+    <link rel="stylesheet" href="../source/css/style.css">
+    <link rel="stylesheet" href="../source/css/fonts.css">
 
     <!-- Non-critical CSS - load asynchronously -->
-    <link rel="preload" href="source/css/navbar.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="source/css/modal.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="source/css/player.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="../source/css/navbar.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="../source/css/modal.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="../source/css/player.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="https://unpkg.com/aos@2.3.4/dist/aos.css" as="style"
         onload="this.onload=null;this.rel='stylesheet'">
 
     <!-- Fallback for browsers that don't support preload -->
     <noscript>
-        <link rel="stylesheet" href="source/css/navbar.css">
-        <link rel="stylesheet" href="source/css/modal.css">
-        <link rel="stylesheet" href="source/css/player.css">
+        <link rel="stylesheet" href="../source/css/navbar.css">
+        <link rel="stylesheet" href="../source/css/modal.css">
+        <link rel="stylesheet" href="../source/css/player.css">
         <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
         <link rel="stylesheet" href="plugins/boxicons/basic/boxicons.min.css">
     </noscript>
@@ -94,7 +94,7 @@
             <div class="music-bar minimal">
                 <!-- Hidden YouTube player -->
                 <audio id="audio" class="hidden" preload="none" loading="lazy">
-                    <source src="source/audio/bermuara.mp3" type="audio/mp3">
+                    <source src="../source/audio/bermuara.mp3" type="audio/mp3">
                 </audio>
                 <button id="musicBtn" class="music-btn" title="Bermuara – Mahalini & Rizky Febian" aria-label="Play">
                     <div id="musicVisualizer" class="music-visualizer">
@@ -293,14 +293,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Countdown Timer Script -->
-    <script src="source/js/main.js" defer></script>
-    <script src="source/js/modal.js" defer></script>
-    <script src="source/js/player.js" defer></script>
+    <script src="../source/js/main.js" defer></script>
+    <script src="../source/js/modal.js" defer></script>
+    <script src="../source/js/player.js" defer></script>
 
     <!-- AOS JavaScript -->
     <script src="https://unpkg.aos@2.3.4/dist/aos.js"></script>
 
-    <script src="source/js/particle.js"></script>
+    <script src="../source/js/particle.js"></script>
 
 </body>
 
