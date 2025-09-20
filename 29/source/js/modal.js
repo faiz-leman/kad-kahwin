@@ -9,47 +9,45 @@ function openModal(type) {
 
   switch (type) {
     case "contact":
-      title = "HUBUNGI KAMI";
+      title = "HUBUNGI";
       content = `
                 <div class="contact-info">
-                    <div class="mb-3">
-                        <h6>Pihak Lelaki</h6>
-                        <p>Muhammad Faiz bin Leman</p>
-                        <a href="tel:+60123456789" class="btn btn-outline-primary">
-                            <i class="bx bx-phone"></i> 012-345 6789
-                        </a>
-                    </div>
-                    <div class="mb-3">
-                        <h6>Pihak Perempuan</h6>
-                        <p>Syukriah binti Hj. Zahari</p>
-                        <a href="tel:+60123456789" class="btn btn-outline-primary">
-                            <i class="bx bx-phone"></i> 012-345 6789
-                        </a>
+                    <div class="d-flex justify-content-between align-items-center mb-3 py-2">
+                        <div class="d-flex flex-column">
+                            <span class="text-start">Fatin Nabila</span>
+                            <span class="fst-italic">Kakak</span>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a href="tel:+601123164027" class="text-primary">
+                                <i class="bx bx-md bx-phone"></i>
+                            </a>
+                            <a href="https://wa.me/601123164027" target="_blank" class="text-primary">
+                                <i class="bx bx-md bxl-whatsapp"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             `;
       break;
 
     case "rsvp":
-      title = "RSVP";
+      title = "RSVP & UCAPAN";
       content = `
-                <div class="row g-2 mb-4">
-                    <div class="col-6">
-                        <button class="btn btn-success w-100 rsvp-btn" data-status="hadir">
-                            <i class="bx bx-check"></i>
-                            Hadir
-                        </button>
+                <div class="rsvp-initial">
+                    <div class="row g-2 mb-4">
+                        <div class="col-6">
+                            <button class="btn btn-success w-100 rsvp-choice-btn" data-choice="hadir">
+                                <i class="bx bx-check"></i>
+                                Hadir
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-outline-secondary w-100 rsvp-choice-btn" data-choice="tidak-hadir">
+                                <i class="bx bx-x"></i>
+                                Tidak Hadir
+                            </button>
+                        </div>
                     </div>
-                    <div class="col-6">
-                        <button class="btn btn-outline-secondary w-100 rsvp-btn" data-status="tidak-hadir">
-                            <i class="bx bx-x"></i>
-                            Tidak Hadir
-                        </button>
-                    </div>
-                </div>
-                <div class="mt-3">
-                    <input type="text" class="form-control mb-2" placeholder="Nama anda" id="guestName">
-                    <textarea class="form-control" placeholder="Ucapan (pilihan)" rows="3" id="guestMessage"></textarea>
                 </div>
             `;
       break;
@@ -65,12 +63,12 @@ function openModal(type) {
                     </p>
                     <div class="row g-2">
                         <div class="col-6">
-                            <a href="https://maps.google.com" target="_blank" class="btn btn-primary w-100">
-                                <i class="bx bx-map"></i> Google Maps
+                            <a href="https://maps.app.goo.gl/gmDTzC1Y2Hq14PYV8" target="_blank" class="btn btn-outline-secondary w-100">
+                                <i class="bx bx-navigation"></i> Google Maps
                             </a>
                         </div>
                         <div class="col-6">
-                            <a href="https://waze.com" target="_blank" class="btn btn-outline-primary w-100">
+                            <a href="https://www.waze.com/en/live-map/directions/kamalinda-events-and-weddings,-utropolis-jalan-kontraktor-u114-shah-alam?place=w.66584607.665583925.20871982" target="_blank" class="btn btn-outline-secondary  w-100">
                                 <i class="bx bx-navigation"></i> Waze
                             </a>
                         </div>
@@ -88,18 +86,16 @@ function openModal(type) {
                         <p>Sabtu, 29 November 2025</p>
                         <p>11:00 AM - 4:00 PM</p>
                     </div>
-                    <div class="row g-2">
-                        <div class="col-6">
-                            <button class="btn btn-primary w-100" onclick="addToGoogleCalendar()">
-                                <i class="bx bx-calendar-plus"></i> Google Calendar
-                            </button>
-                        </div>
-                        <div class="col-6">
-                            <button class="btn btn-outline-primary w-100" onclick="downloadICS()">
-                                <i class="bx bx-download"></i> Download ICS
-                            </button>
-                        </div>
-                    </div>
+                      <div class="col-12">
+                          <button class="btn btn-outline-secondary w-100" onclick="addToGoogleCalendar()">
+                              <i class="bx bx-calendar-plus"></i> Google Calendar
+                          </button>
+                      </div>
+                      <div class="col-12 mt-2">
+                          <button class="btn btn-outline-secondary w-100" onclick="addToAppleCalendar()">
+                              <i class="bx bx-calendar-event"></i> Apple Calendar
+                          </button>
+                      </div>
                 </div>
             `;
       break;
@@ -112,19 +108,100 @@ function openModal(type) {
   const bsModal = new bootstrap.Modal(modal);
   bsModal.show();
 
-  // Add event listeners for RSVP buttons if it's RSVP modal
+  // Add event listeners for RSVP choice buttons
   if (type === "rsvp") {
-    const rsvpButtons = modal.querySelectorAll(".rsvp-btn");
-    rsvpButtons.forEach((btn) => {
+    const rsvpChoiceButtons = modal.querySelectorAll(".rsvp-choice-btn");
+    rsvpChoiceButtons.forEach((btn) => {
       btn.addEventListener("click", function () {
-        const status = this.getAttribute("data-status");
-        handleRSVP(status);
+        const choice = this.getAttribute("data-choice");
+        showRSVPForm(choice);
       });
     });
   }
 }
 
-function handleRSVP(status) {
+function showRSVPForm(choice) {
+  const modalContent = document.getElementById("dynamicModalContent");
+  let formContent = "";
+
+  if (choice === "hadir") {
+    // Attendance confirmation form
+    formContent = `
+      <div class="rsvp-form">
+        <div class="mb-3">
+          <label for="guestName" class="form-label text-start d-block">Nama</label>
+          <input type="text" class="form-control" id="guestName" required>
+        </div>
+        <div class="mb-3">
+          <label for="guestPhone" class="form-label text-start d-block">Nombor Telefon</label>
+          <input type="tel" class="form-control" id="guestPhone" required>
+        </div>
+        <div class="mb-3">
+          <label for="attendeeCount" class="form-label text-start d-block">Jumlah Kehadiran</label>
+          <select class="form-control" id="attendeeCount" required>
+            <option value="">1 orang</option>
+            <option value="1">1 orang</option>
+            <option value="2">2 orang</option>
+            <option value="3">3 orang</option>
+            <option value="4">4 orang</option>
+            <option value="5">5 orang</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="guestMessage" class="form-label text-start d-block">Ucapan</label>
+          <textarea class="form-control" id="guestMessage" rows="3"></textarea>
+        </div>
+        <div class="row g-2">
+          <div class="col-6">
+            <button class="btn btn-success w-100" onclick="submitRSVP('hadir')">
+              Hantar
+            </button>
+          </div>
+          <div class="col-6">
+            <button class="btn btn-outline-secondary w-100" onclick="backToRSVPChoice()">
+              Batal
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  } else {
+    // Just wish form for tidak hadir
+    formContent = `
+      <div class="rsvp-form">
+        <div class="mb-3">
+          <label for="guestName" class="form-label text-start d-block">Nama</label>
+          <input type="text" class="form-control" id="guestName" required>
+        </div>
+        <div class="mb-3">
+          <label for="guestMessage" class="form-label text-start d-block">Ucapan</label>
+          <textarea class="form-control" id="guestMessage" rows="3" required></textarea>
+        </div>
+        <div class="row g-2">
+          <div class="col-6">
+            <button class="btn btn-success w-100" onclick="submitRSVP('tidak-hadir')">
+              Hantar
+            </button>
+          </div>
+          <div class="col-6">
+            <button class="btn btn-outline-secondary w-100" onclick="backToRSVPChoice()">
+              Batal
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  modalContent.innerHTML = formContent;
+}
+
+function backToRSVPChoice() {
+  // Reload the initial RSVP choice screen
+  openModal("rsvp");
+}
+
+function submitRSVP(status) {
   const guestName = document.getElementById("guestName").value;
   const guestMessage = document.getElementById("guestMessage").value;
 
@@ -133,12 +210,38 @@ function handleRSVP(status) {
     return;
   }
 
-  // Here you can add your RSVP submission logic
-  console.log("RSVP Status:", status);
-  console.log("Guest Name:", guestName);
-  console.log("Guest Message:", guestMessage);
+  let attendeeCount = 1;
+  if (status === "hadir") {
+    const guestPhone = document.getElementById("guestPhone").value;
+    const attendeeCountElement = document.getElementById("attendeeCount");
+    attendeeCount = attendeeCountElement.value || 1;
 
-  alert(`Terima kasih ${guestName}! RSVP anda telah direkodkan.`);
+    if (!guestPhone.trim()) {
+      alert("Sila masukkan nombor telefon anda");
+      return;
+    }
+
+    console.log("RSVP Status:", status);
+    console.log("Guest Name:", guestName);
+    console.log("Guest Phone:", guestPhone);
+    console.log("Attendee Count:", attendeeCount);
+    console.log("Guest Message:", guestMessage);
+
+    alert(
+      `Terima kasih ${guestName}! Kehadiran ${attendeeCount} orang telah direkodkan.`
+    );
+  } else {
+    if (!guestMessage.trim()) {
+      alert("Sila tulis ucapan anda");
+      return;
+    }
+
+    console.log("RSVP Status:", status);
+    console.log("Guest Name:", guestName);
+    console.log("Guest Message:", guestMessage);
+
+    alert(`Terima kasih ${guestName}! Ucapan anda telah direkodkan.`);
+  }
 
   // Close modal
   const modal = bootstrap.Modal.getInstance(
@@ -159,7 +262,7 @@ function addToGoogleCalendar() {
   window.open(googleCalendarUrl, "_blank");
 }
 
-function downloadICS() {
+function addToAppleCalendar() {
   const icsContent = `BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//Wedding//Wedding Event//EN
@@ -176,11 +279,25 @@ END:VCALENDAR`;
 
   const blob = new Blob([icsContent], { type: "text/calendar" });
   const url = window.URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "wedding-faiz-syukriah.ics";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+
+  // Create a temporary link with webcal protocol for Apple Calendar
+  const webcalUrl = url.replace("blob:", "webcal://");
+
+  // For iOS/macOS, try to open with calendar app
+  if (navigator.userAgent.match(/iPhone|iPad|iPod|Macintosh/i)) {
+    // Try webcal protocol first
+    window.location.href = `webcal://calendar.google.com/calendar/ical/${encodeURIComponent(
+      "Walimaturus Faiz & Syukriah"
+    )}/public/basic.ics`;
+  } else {
+    // Fallback to download for other devices
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "wedding-faiz-syukriah.ics";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
   window.URL.revokeObjectURL(url);
 }
