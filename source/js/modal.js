@@ -52,6 +52,37 @@ function openModal(type) {
             `;
       break;
 
+    case "wish":
+      title = "UCAPAN";
+      content = `<form id="rsvpForm" method="post">
+      <input type="hidden" id="rsvpChoice" name="rsvpChoice" value="n">
+      <div id="rsvpForm" class="rsvp-form">
+        <div class="mb-3">
+          <label for="guestName" class="form-label text-start d-block">Nama</label>
+          <input type="text" class="form-control" name="guestName" id="guestName" required>
+        </div>
+        <div class="mb-3">
+          <label for="guestMessage" class="form-label text-start d-block">Ucapan</label>
+          <textarea class="form-control" name="guestWish" id="guestMessage" rows="3" required></textarea>
+        </div>
+        <div class="row g-2">
+          <div class="col-6">
+            <button type="submit" id="submitButton" class="btn btn-success w-100">
+              <span id="submitSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                <span id="submitButtonText">Hantar</span>
+            </button>
+          </div>
+          <div class="col-6">
+            <button class="btn btn-outline-secondary w-100" onclick="backToRSVPChoice()">
+              Batal
+            </button>
+          </div>
+        </div>
+      </div>
+      <div id="rsvpNote" class="d-none"></div>
+    </form>`;
+      break;
+
     case "location":
       title = "LOKASI MAJLIS";
       content = `
