@@ -5,6 +5,76 @@ $(document).ready(function () {
 
   // Refresh every 30 seconds
   setInterval(() => loadWishes(eventId), 30000);
+
+  // Use event delegation for dynamically created forms
+  $(document).on("submit", "#rsvpForm", function (e) {
+    e.preventDefault();
+
+    $("#submitButton").prop("disabled", true);
+    $("#submitButtonText").addClass("d-none");
+    $("#submitSpinner").removeClass("d-none");
+    $("#rsvpNote").html("").removeClass("d-none");
+
+    var formData = $(this).serialize();
+    // Add eventId to form data
+    formData += "&eventId=" + (getEventIdFromScript() || 29);
+
+    var spinnerMinTime = 1000;
+    var startTime = Date.now();
+
+    $.ajax({
+      url: "/kad-kahwin/controller/submit.php",
+      type: "POST",
+      data: formData,
+      dataType: "json",
+      success: function (response) {
+        var elapsed = Date.now() - startTime;
+        var remaining = spinnerMinTime - elapsed;
+        if (remaining < 0) remaining = 0;
+
+        setTimeout(function () {
+          $("#submitButton").prop("disabled", false);
+          $("#submitButtonText").removeClass("d-none");
+          $("#submitSpinner").addClass("d-none");
+
+          if (response.success) {
+            $("#rsvpNote").html(
+              '<div class="alert alert-success mt-3" role="alert">' +
+                response.message +
+                "</div>"
+            );
+
+            loadWishes(response.eventId || getEventIdFromScript() || 29);
+
+            // Clear form after successful submission
+            $("#rsvpForm")[0].reset();
+          } else {
+            $("#rsvpNote").html(
+              '<div class="alert alert-danger mt-3" role="alert">' +
+                response.message +
+                "</div>"
+            );
+          }
+        }, remaining);
+      },
+      error: function (xhr, status, error) {
+        var elapsed = Date.now() - startTime;
+        var remaining = spinnerMinTime - elapsed;
+        if (remaining < 0) remaining = 0;
+
+        setTimeout(function () {
+          $("#rsvpNote").html(
+            '<div class="alert alert-danger mt-3" role="alert">' +
+              "Ralat berlaku. Sila cuba lagi." +
+              "</div>"
+          );
+          $("#submitButton").prop("disabled", false);
+          $("#submitButtonText").removeClass("d-none");
+          $("#submitSpinner").addClass("d-none");
+        }, remaining);
+      },
+    });
+  });
 });
 
 function getEventIdFromScript() {
@@ -21,7 +91,8 @@ function getEventIdFromScript() {
 
 function loadWishes(eventId) {
   $.ajax({
-    url: `../controller/getwish.php?eid=${eventId}`,
+    // Try absolute path instead of relative path
+    url: "/kad-kahwin/controller/getwish.php?eid=" + eventId,
     method: "GET",
     dataType: "json",
     success: function (wishes) {
@@ -32,22 +103,25 @@ function loadWishes(eventId) {
 
         $.each(wishes, function (index, wish) {
           const wishHtml = `
-                        <li class="mb-3">
-                            <span class="text-light fst-italic">"${escapeHtml(
-                              wish.guestWish
-                            )}"</span><br>
-                            <strong class="text-primary">${escapeHtml(
-                              wish.guestName
-                            )}</strong>
-                        </li>
-                    `;
+                    <li class="mb-3">
+                        <span class="text-light fst-italic">"${escapeHtml(
+                          wish.guestWish
+                        )}"</span><br>
+                        <strong class="text-primary">${escapeHtml(
+                          wish.guestName
+                        )}</strong>
+                    </li>
+                `;
           wishContainer.append(wishHtml);
         });
       } else {
         // Generate random wishes if none exist
         const randomWishes = [
           { guestName: "Ali", guestWish: "Selamat pengantin baru!" },
-          { guestName: "Siti", guestWish: "Semoga bahagia hingga ke Jannah." },
+          {
+            guestName: "Siti",
+            guestWish: "Semoga bahagia hingga ke Jannah.",
+          },
           {
             guestName: "Ahmad",
             guestWish: "Tahniah dan selamat menempuh hidup baru!",
@@ -62,18 +136,19 @@ function loadWishes(eventId) {
           randomWishes[Math.floor(Math.random() * randomWishes.length)];
         wishContainer.html(
           `<li class="mb-3">
-              <span class="text-light fst-italic">"${escapeHtml(
-                randomWish.guestWish
-              )}"</span><br>
-              <strong class="text-primary">${escapeHtml(
-                randomWish.guestName
-              )}</strong>
-          </li>`
+            <span class="text-light fst-italic">"${escapeHtml(
+              randomWish.guestWish
+            )}"</span><br>
+            <strong class="text-primary">${escapeHtml(
+              randomWish.guestName
+            )}</strong>
+        </li>`
         );
       }
     },
     error: function (xhr, status, error) {
       console.error("Error fetching wishes:", error);
+      console.error("Response text:", xhr.responseText); // Add this to see actual response
       $("#guestbook-container ul").html(
         '<li class="mb-3"><span class="text-light">Gagal memuatkan ucapan.</span></li>'
       );
@@ -84,5 +159,3 @@ function loadWishes(eventId) {
 function escapeHtml(text) {
   return $("<div>").text(text).html();
 }
-
-// Modal handling for RSVP

@@ -15,7 +15,7 @@ function openModal(type) {
                     <div class="d-flex justify-content-between align-items-center mb-3 py-2">
                         <div class="d-flex flex-column">
                             <span class="text-start">Fatin Nabila</span>
-                            <span class="fst-italic">Kakak</span>
+                            <span class="fst-italic text-start">Kakak</span>
                         </div>
                         <div class="d-flex gap-2">
                             <a href="tel:+601123164027" class="text-primary">
@@ -127,9 +127,9 @@ function showRSVPForm(choice) {
   if (choice === "hadir") {
     // Attendance confirmation form
     formContent = `
-    <form id="rsvpForm">
+    <form id="rsvpForm" method="post">
       <input type="hidden" id="rsvpChoice" name="rsvpChoice" value="y">
-      <div class="rsvp-form">
+      <div id="rsvpForm" class="rsvp-form">
         <div class="mb-3">
           <label for="guestName" class="form-label text-start d-block">Nama</label>
           <input type="text" class="form-control" name="guestName" id="guestName" required>
@@ -137,7 +137,7 @@ function showRSVPForm(choice) {
         <div class="mb-3">
           <label for="attendeeCount" class="form-label text-start d-block">Jumlah Kehadiran</label>
           <select class="form-control" name="attendeesPax" id="attendeeCount" required>
-            <option value="">1 orang</option>
+            <option value="">-- Pilih Pax --</option>
             <option value="1">1 orang</option>
             <option value="2">2 orang</option>
             <option value="3">3 orang</option>
@@ -151,8 +151,9 @@ function showRSVPForm(choice) {
         </div>
         <div class="row g-2">
           <div class="col-6">
-            <button class="btn btn-success w-100" onclick="submitRSVP('hadir')">
-              Hantar
+            <button type="submit" id="submitButton" class="btn btn-success w-100">
+              <span id="submitSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                <span id="submitButtonText">Hantar</span>
             </button>
           </div>
           <div class="col-6">
@@ -162,14 +163,15 @@ function showRSVPForm(choice) {
           </div>
         </div>
       </div>
+      <div id="rsvpNote" class="d-none"></div>
     </form>
     `;
   } else {
     // Just wish form for tidak hadir
     formContent = `
-    <form id="rsvpForm">
+    <form id="rsvpForm" method="post">
       <input type="hidden" id="rsvpChoice" name="rsvpChoice" value="n">
-      <div class="rsvp-form">
+      <div id="rsvpForm" class="rsvp-form">
         <div class="mb-3">
           <label for="guestName" class="form-label text-start d-block">Nama</label>
           <input type="text" class="form-control" name="guestName" id="guestName" required>
@@ -180,8 +182,9 @@ function showRSVPForm(choice) {
         </div>
         <div class="row g-2">
           <div class="col-6">
-            <button class="btn btn-success w-100" onclick="submitRSVP('tidak-hadir')">
-              Hantar
+            <button type="submit" id="submitButton" class="btn btn-success w-100">
+              <span id="submitSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                <span id="submitButtonText">Hantar</span>
             </button>
           </div>
           <div class="col-6">
@@ -191,6 +194,8 @@ function showRSVPForm(choice) {
           </div>
         </div>
       </div>
+      <div id="rsvpNote" class="d-none"></div>
+
     `;
   }
 
@@ -200,55 +205,6 @@ function showRSVPForm(choice) {
 function backToRSVPChoice() {
   // Reload the initial RSVP choice screen
   openModal("rsvp");
-}
-
-function submitRSVP(status) {
-  const guestName = document.getElementById("guestName").value;
-  const guestMessage = document.getElementById("guestMessage").value;
-
-  if (!guestName.trim()) {
-    alert("Sila masukkan nama anda");
-    return;
-  }
-
-  let attendeeCount = 1;
-  if (status === "hadir") {
-    const guestPhone = document.getElementById("guestPhone").value;
-    const attendeeCountElement = document.getElementById("attendeeCount");
-    attendeeCount = attendeeCountElement.value || 1;
-
-    if (!guestPhone.trim()) {
-      alert("Sila masukkan nombor telefon anda");
-      return;
-    }
-
-    console.log("RSVP Status:", status);
-    console.log("Guest Name:", guestName);
-    console.log("Guest Phone:", guestPhone);
-    console.log("Attendee Count:", attendeeCount);
-    console.log("Guest Message:", guestMessage);
-
-    alert(
-      `Terima kasih ${guestName}! Kehadiran ${attendeeCount} orang telah direkodkan.`
-    );
-  } else {
-    if (!guestMessage.trim()) {
-      alert("Sila tulis ucapan anda");
-      return;
-    }
-
-    console.log("RSVP Status:", status);
-    console.log("Guest Name:", guestName);
-    console.log("Guest Message:", guestMessage);
-
-    alert(`Terima kasih ${guestName}! Ucapan anda telah direkodkan.`);
-  }
-
-  // Close modal
-  const modal = bootstrap.Modal.getInstance(
-    document.getElementById("dynamicModal")
-  );
-  modal.hide();
 }
 
 function addToGoogleCalendar() {
