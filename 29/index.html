@@ -11,36 +11,44 @@
     <link rel="icon" type="image/png" sizes="16x16" href="https://www.kahwinnow.com/img/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="https://www.kahwinnow.com/img/favicon.ico">
 
-    <!-- Preconnect to external resources -->
+    <!-- Preconnect to external resources (remove Google Fonts) -->
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://unpkg.com">
     <link rel="preconnect" href="https://www.thekahwin.my">
 
+    <!-- Preload critical fonts first -->
+    <link rel="preload" href="../source/font/Ephesis/Ephesis-Regular.ttf" as="font" type="font/ttf" crossorigin>
+
     <!-- External Libraries with defer -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
-    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
-    <!-- Critical CSS - load immediately -->
+    <!-- Critical CSS - load immediately (fonts.css now loads first for better performance) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../source/css/style.css">
     <link rel="stylesheet" href="../source/css/fonts.css">
+    <link rel="stylesheet" href="../source/css/style.css">
+
+    <!-- Preload critical CSS -->
+    <link rel="preload" href="../source/css/style.css" as="style">
+    <link rel="preload" href="../source/css/fonts.css" as="style">
+
+    <!-- Preload critical JS -->
+    <link rel="preload" href="../source/js/main.js" as="script">
 
     <!-- Non-critical CSS - load asynchronously -->
     <link rel="preload" href="../source/css/navbar.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="../source/css/modal.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="../source/css/player.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="https://unpkg.com/aos@2.3.4/dist/aos.css" as="style"
-        onload="this.onload=null;this.rel='stylesheet'">
 
     <!-- Fallback for browsers that don't support preload -->
     <noscript>
         <link rel="stylesheet" href="../source/css/navbar.css">
         <link rel="stylesheet" href="../source/css/modal.css">
         <link rel="stylesheet" href="../source/css/player.css">
-        <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
-        <link rel="stylesheet" href="plugins/boxicons/basic/boxicons.min.css">
+        <link rel="stylesheet" href="../plugins/boxicons/basic/boxicons.min.css">
     </noscript>
 
 
@@ -54,22 +62,25 @@
 
         <div id="particles-js" class="particles-container"></div>
 
-        <nav class="bottom-nav fixed-bottom text-white mt-5">
+        <nav class="bottom-nav fixed-bottom text-white mt-5" role="navigation" aria-label="Main navigation">
             <div class="container d-flex justify-content-around py-3">
-                <a href="javascript:void(0)" class="nav-item" onclick="openModal('contact')">
-                    <i class="bx bx-xl bx-phone"></i>
+                <a href="javascript:void(0)" class="nav-item" onclick="openModal('contact')"
+                    aria-label="Contact information">
+                    <i class="bx bx-xl bx-phone" aria-hidden="true"></i>
                     <span>Hubungi</span>
                 </a>
-                <a href="javascript:void(0)" class="nav-item" onclick="openModal('rsvp')">
-                    <i class="bx bx-xl bx-clipboard"></i>
+                <a href="javascript:void(0)" class="nav-item" onclick="openModal('rsvp')" aria-label="RSVP form">
+                    <i class="bx bx-xl bx-clipboard" aria-hidden="true"></i>
                     <span>RSVP</span>
                 </a>
-                <a href="javascript:void(0)" class="nav-item" onclick="openModal('location')">
-                    <i class="bx bx-xl bx-map"></i>
+                <a href="javascript:void(0)" class="nav-item" onclick="openModal('location')"
+                    aria-label="Event location">
+                    <i class="bx bx-xl bx-map" aria-hidden="true"></i>
                     <span>Lokasi</span>
                 </a>
-                <a href="javascript:void(0)" class="nav-item" onclick="openModal('calendar')">
-                    <i class="bx bx-xl bx-calendar-event"></i>
+                <a href="javascript:void(0)" class="nav-item" onclick="openModal('calendar')"
+                    aria-label="Add to calendar">
+                    <i class="bx bx-xl bx-calendar-event" aria-hidden="true"></i>
                     <span>Kalendar</span>
                 </a>
             </div>
@@ -225,11 +236,13 @@
                 </div>
             </section>
 
+            <!-- Replace the gallery image with optimized version -->
             <section class="fade-in">
                 <div class="gallery my-4 py-2">
                     <img src="https://www.thekahwin.my/assets/img/dummy/dummy5.webp"
                         alt="Wedding photo of Faiz and Syukriah" loading="lazy" decoding="async" width="300"
-                        height="400">
+                        height="400" sizes="(max-width: 768px) 100vw, 300px" srcset="https://www.thekahwin.my/assets/img/dummy/dummy5-small.webp 300w,
+                                https://www.thekahwin.my/assets/img/dummy/dummy5.webp 600w">
                     <p>Artwork by <a href="#" class="brand text-primary fw-bold">The Kahwin</a></p>
                 </div>
             </section>
@@ -259,8 +272,6 @@
         </div>
     </div>
 
-    <!-- Add jQuery before Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -268,9 +279,6 @@
     <script src="../source/js/main.js" defer></script>
     <script src="../source/js/modal.js" defer></script>
     <script src="../source/js/player.js" defer></script>
-
-    <!-- AOS JavaScript -->
-    <script src="https://unpkg.aos@2.3.4/dist/aos.js"></script>
 
     <script src="../source/js/particle.js"></script>
     <script src="../source/js/ajax.js?eventId=29"></script>
