@@ -51,9 +51,11 @@
         <link rel="stylesheet" href="../plugins/boxicons/basic/boxicons.min.css">
     </noscript>
 
+    <!-- Add AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 
-<body data-aos-easing="slide" data-aos-duration="400" data-aos-delay="0">
+<body data-aos-easing="ease-out-cubic" data-aos-duration="800" data-aos-delay="0">
 
     <!-- Main Content -->
     <div class="main-content bg-light-brown fade-in">
@@ -119,68 +121,65 @@
                 </button>
             </div>
             <section class="fade-in px-2">
-                <p>Assalamualaikum & salam sejahtera, kami</p>
-                <div class="mt-3 py-3">
+                <p data-aos="fade-up" data-aos-delay="0">Assalamualaikum & salam sejahtera, kami</p>
+                <div class="mt-3 py-3" data-aos="fade-up" data-aos-delay="100">
                     <h3 class="mt-md name-subpage">Hj. Zahari Bin Hj. Idris</h3>
                     <h3 class="mx-1 name-subpage">&amp;</h3>
                     <h3 class="mt-md name-subpage">Hjh. Hamizah Binti Abdullah</h3>
                 </div>
-                <div class="mt-2">
+                <div class="mt-2" data-aos="fade-up" data-aos-delay="200">
                     <p>menjemput</p>
-                    <p>
-                        Dato' | Datin | Tuan | Puan | Encik | Cik
-                    </p>
+                    <p>Dato' | Datin | Tuan | Puan | Encik | Cik</p>
                     <p>ke walimatulurus puteri kami</p>
                 </div>
-                <div class="mt-3 py-3">
+                <div class="mt-3 py-3" data-aos="fade-up" data-aos-delay="300">
                     <h3 class="mt-md name-subpage">Syukriah binti Hj. Zahari</h3>
                     <h3 class="mx-1 name-subpage">&amp;</h3>
                     <h3 class="mt-md name-subpage">Muhammad Faiz bin Leman</h3>
                 </div>
             </section>
 
-            <hr class="divider mt-lg mb-lg">
+            <hr class="divider mt-lg mb-lg" data-aos="fade-up" data-aos-delay="0">
 
-            <section class="fade-in px-2">
-                <h5 class="section-title text-brown">TEMPAT</h5>
-                <p>
+            <section class="fade-in px-2" data-aos="fade-up" data-aos-delay="0">
+                <h5 class="section-title text-brown" data-aos="fade-up" data-aos-delay="50">TEMPAT</h5>
+                <p data-aos="fade-up" data-aos-delay="100">
                     Dewan Dataran Dato' Mohd Said,<br>
                     Lot 897, Dataran Dato Mohd Said KM23.5, Jalan KL-Seremban,
                     Jalan Rinching Tengah, 43700<br>
                     Beranang, Selangor
                 </p>
 
-                <h5 class="section-title text-brown">TARIKH</h5>
-                <p>Sabtu, 22 November 2025</p>
-                <p class="fst-italic">8 Jamadilakhir 1447H</p>
+                <h5 class="section-title text-brown" data-aos="fade-up" data-aos-delay="150">TARIKH</h5>
+                <p data-aos="fade-up" data-aos-delay="200">Sabtu, 22 November 2025</p>
+                <p class="fst-italic" data-aos="fade-up" data-aos-delay="250">8 Jamadilakhir 1447H</p>
 
-                <h5 class="section-title text-brown">WAKTU</h5>
-                <p>11:00 pagi - 04:00 petang</p>
+                <h5 class="section-title text-brown" data-aos="fade-up" data-aos-delay="300">WAKTU</h5>
+                <p data-aos="fade-up" data-aos-delay="350">11:00 pagi - 04:00 petang</p>
 
-                <div>
+                <div data-aos="fade-up" data-aos-delay="400">
                     <button class="btn btn-outline-dark my-2" onclick="openModal('calendar')">Simpan Tarikh</button>
                 </div>
-
             </section>
 
-            <section class="fade-in">
+            <section class="fade-in" data-aos="fade-up" data-aos-delay="0">
                 <div class="tentative-section my-4 py-2 d-flex justify-content-center">
                     <div class="mt-lg mb-lg">
-                        <div class="tentative-card glass-frosted">
+                        <div class="tentative-card glass-frosted" data-aos="zoom-in" data-aos-delay="100">
                             <h5 class="section-title text-brown">ATUR CARA MAJLIS</h5>
                             <table class="tentative-table">
                                 <tbody>
-                                    <tr class="tentative-row">
+                                    <tr class="tentative-row" data-aos="fade-left" data-aos-delay="200">
                                         <td class="tentative-label text-brown">Kehadiran Tetamu<br><span
                                                 class="tentative-time text-contra-brown">11:00
                                                 Pagi</span></td>
                                     </tr>
-                                    <tr class="tentative-row">
+                                    <tr class="tentative-row" data-aos="fade-left" data-aos-delay="300">
                                         <td class="tentative-label text-brown">Ketibaan Pengantin<br><span
                                                 class="tentative-time text-contra-brown">12:30
                                                 Tengah Hari</span></td>
                                     </tr>
-                                    <tr class="tentative-row">
+                                    <tr class="tentative-row" data-aos="fade-left" data-aos-delay="400">
                                         <td class="tentative-label text-brown">Majlis Berakhir<br><span
                                                 class="tentative-time text-contra-brown">4:00
                                                 Petang</span></td>
@@ -192,46 +191,43 @@
                 </div>
             </section>
 
-            <section class="fade-in px-2">
-                <h5 class="section-title text-brown">UCAPAN</h5>
-                <div class="wish-viewer px-2 py-2" id="guestbook-container">
-                    <ul class="list-unstyled mb-0">
-                    </ul>
+            <section class="fade-in px-2" data-aos="fade-up" data-aos-delay="0">
+                <h5 class="section-title text-brown" data-aos="fade-up" data-aos-delay="50">UCAPAN</h5>
+                <div class="wish-viewer px-2 py-2" id="guestbook-container" data-aos="fade-up" data-aos-delay="100">
+                    <ul class="list-unstyled mb-0"></ul>
                 </div>
-                <div class="row g-2 mt-4 d-flex justify-content-center">
+                <div class="row g-2 mt-4 d-flex justify-content-center" data-aos="fade-up" data-aos-delay="150">
                     <div class="col-6">
-                        <button class="btn btn-outline-dark w-100" onclick="openModal('rsvp')">
-                            Sahkan Kehadiran</button>
+                        <button class="btn btn-outline-dark w-100" onclick="openModal('rsvp')">Sahkan Kehadiran</button>
                     </div>
                     <div class="col-6">
-                        <button class="btn btn-outline-dark w-100" onclick="openModal('wish')">Tulis
-                            Ucapan</button>
+                        <button class="btn btn-outline-dark w-100" onclick="openModal('wish')">Tulis Ucapan</button>
                     </div>
                 </div>
             </section>
 
-            <section class="fade-in px-3 my-4">
-                <h5 class="section-title text-brown">MENGHITUNG HARI</h5>
-                <div class="row justify-content-center g-3">
-                    <div class="col-3 col-sm-3">
+            <section class="fade-in px-3 my-4" data-aos="fade-up" data-aos-delay="0">
+                <h5 class="section-title text-brown" data-aos="fade-up" data-aos-delay="50">MENGHITUNG HARI</h5>
+                <div class="row justify-content-center g-3" data-aos="fade-up" data-aos-delay="100">
+                    <div class="col-3 col-sm-3" data-aos="flip-up" data-aos-delay="150">
                         <div class="countdown-card p-md text-center">
                             <div class="countdown-card__number text-brown" id="days">0</div>
                             <p class="countdown-card__label text-contra-brown">Hari</p>
                         </div>
                     </div>
-                    <div class="col-3 col-sm-3">
+                    <div class="col-3 col-sm-3" data-aos="flip-up" data-aos-delay="200">
                         <div class="countdown-card p-md text-center">
                             <div class="countdown-card__number text-brown" id="hours">0</div>
                             <p class="countdown-card__label text-contra-brown">Jam</p>
                         </div>
                     </div>
-                    <div class="col-3 col-sm-3">
+                    <div class="col-3 col-sm-3" data-aos="flip-up" data-aos-delay="250">
                         <div class="countdown-card p-md text-center">
                             <div class="countdown-card__number text-brown" id="minutes">0</div>
                             <p class="countdown-card__label text-contra-brown">Minit</p>
                         </div>
                     </div>
-                    <div class="col-3 col-sm-3">
+                    <div class="col-3 col-sm-3" data-aos="flip-up" data-aos-delay="300">
                         <div class="countdown-card p-md text-center">
                             <div class="countdown-card__number text-brown" id="seconds">0</div>
                             <p class="countdown-card__label text-contra-brown">Saat</p>
@@ -241,31 +237,32 @@
             </section>
 
             <!-- Replace the gallery image with optimized version -->
-            <section class="fade-in">
+            <section class="fade-in" data-aos="zoom-in" data-aos-delay="0">
                 <div class="gallery my-4 py-2">
                     <img src="https://www.thekahwin.my/assets/img/dummy/dummy5.webp"
                         alt="Wedding photo of Faiz and Syukriah" loading="lazy" decoding="async" width="300"
                         height="400" sizes="(max-width: 768px) 100vw, 300px" srcset="https://www.thekahwin.my/assets/img/dummy/dummy5-small.webp 300w,
-                                https://www.thekahwin.my/assets/img/dummy/dummy5.webp 600w">
-                    <p>Artwork by <a href="#" class="brand text-brown fw-bold">The Kahwin</a></p>
+                        https://www.thekahwin.my/assets/img/dummy/dummy5.webp 600w">
+                    <p data-aos="fade-up" data-aos-delay="200">Artwork by <a href="#"
+                            class="brand text-brown fw-bold">The Kahwin</a>
+                    </p>
                 </div>
             </section>
 
-            <section class="fade-in px-2">
-                <div class="tentative-card glass-frosted">
+            <section class="fade-in px-2" data-aos="fade-up" data-aos-delay="0">
+                <div class="tentative-card glass-frosted" data-aos="zoom-in" data-aos-delay="100">
                     <span class="fst-italic">Ya Allah, Ya Rahman, Ya Rahim
-
                         berkatilah majlis perkahwinan ini, limpahkan rahmat-Mu kepada kedua mempelai, kurniakanlah
                         mereka zuriat yang soleh dan solehah serta kebahagiaan yang berpanjangan, dan kekalkanlah jodoh
                         mereka hingga ke syurga 🤍</span>
                 </div>
             </section>
 
-            <section class="mt-xl mb-xl">
+            <section class="mt-xl mb-xl" data-aos="fade-up" data-aos-delay="0">
                 <h3 class="text-brown">#FaizXSyukriah</h3>
             </section>
 
-            <section class="mt-xl mb-xl">
+            <section class="mt-xl mb-xl" data-aos="fade-up" data-aos-delay="100">
                 <p>Direka oleh</p>
                 <h3 class="text-brown">Nextara Digital</h3>
             </section>
@@ -298,6 +295,8 @@
     <script src="../source/js/particle22.js"></script>
     <script src="../source/js/ajax.js?eventId=29"></script>
 
+    <!-- Add AOS JS before closing body tag -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 </body>
 
 </html>

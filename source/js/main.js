@@ -1,5 +1,7 @@
 // Cache DOM elements for better performance
 let countdownElements = null;
+let isAutoScrolling = false;
+let autoScrollInterval = null;
 
 function initializeCountdown() {
   countdownElements = {
@@ -37,6 +39,47 @@ function updateCountdown() {
   }
 }
 
+// Auto scroll function that continuously scrolls
+function startAutoScroll() {
+  isAutoScrolling = true;
+  let scrollPosition = 0;
+  const scrollSpeed = 2; // 2 pixels per interval
+  const scrollDelay = 40;
+
+  // Start from top
+  window.scrollTo(0, 0);
+
+  // Wait a moment before starting scroll
+  setTimeout(() => {
+    autoScrollInterval = setInterval(() => {
+      if (!isAutoScrolling) {
+        clearInterval(autoScrollInterval);
+        return;
+      }
+
+      scrollPosition += scrollSpeed;
+      window.scrollTo(0, scrollPosition);
+
+      // Stop when reached bottom
+      const documentHeight = document.documentElement.scrollHeight;
+      const windowHeight = window.innerHeight;
+
+      if (scrollPosition >= documentHeight - windowHeight) {
+        clearInterval(autoScrollInterval);
+        isAutoScrolling = false;
+      }
+    }, scrollDelay);
+  }, 500); // Wait 2 seconds before starting auto scroll
+}
+
+// Stop auto scroll when user interacts
+function stopAutoScroll() {
+  isAutoScrolling = false;
+  if (autoScrollInterval) {
+    clearInterval(autoScrollInterval);
+  }
+}
+
 // Initialize when DOM is ready
 document.addEventListener("DOMContentLoaded", function () {
   initializeCountdown();
@@ -45,13 +88,22 @@ document.addEventListener("DOMContentLoaded", function () {
   // Update countdown every second
   setInterval(updateCountdown, 1000);
 
-  // Initialize AOS if available
-  if (typeof AOS !== "undefined") {
-    AOS.init({
-      duration: 800,
-      once: true,
-    });
-  }
+  AOS.init({
+    duration: 800,
+    easing: "ease-out-cubic",
+    once: false,
+    mirror: true,
+    offset: 50,
+    anchorPlacement: "top-bottom",
+    delay: 0,
+    debounceDelay: 50,
+    throttleDelay: 99,
+    disable: false,
+    startEvent: "DOMContentLoaded",
+  });
+
+  // Add smooth scroll behavior
+  document.documentElement.style.scrollBehavior = "smooth";
 
   // Path detection and body attribute setting
   const currentPath = window.location.pathname;
@@ -60,4 +112,21 @@ document.addEventListener("DOMContentLoaded", function () {
   } else if (currentPath.includes("/29")) {
     document.body.setAttribute("data-path", "29");
   }
+
+  // Stop auto scroll on user interaction
+  document.addEventListener("wheel", stopAutoScroll);
+  document.addEventListener("touchstart", stopAutoScroll);
+  document.addEventListener("touchmove", stopAutoScroll);
+  document.addEventListener("keydown", stopAutoScroll);
+  document.addEventListener("click", stopAutoScroll);
+});
+
+// Start auto scroll when everything is loaded
+window.addEventListener("load", function () {
+  AOS.refresh();
+
+  // Start the continuous auto scroll
+  setTimeout(() => {
+    startAutoScroll();
+  }, 1000);
 });

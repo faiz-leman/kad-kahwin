@@ -148,7 +148,7 @@ body {
   color: var(--font-color-primary) !important;
 }
 .text-primary-dark {
-  color: var(--primary-dark);
+  color: var(--font-22-secondary);
 }
 .text-secondary {
   color: var(--secondary-color);
