@@ -1,6 +1,6 @@
 $(document).ready(function () {
   // Get eventId from the script tag's src parameter or use default
-  const eventId = getEventIdFromScript() || 29; // Default to 29 if not found
+  const eventId = getEventIdFromScript(); // Default to 29 if not found
   loadWishes(eventId);
 
   // Refresh every 30 seconds
@@ -102,14 +102,19 @@ function loadWishes(eventId) {
         wishContainer.empty();
 
         $.each(wishes, function (index, wish) {
+          // Detect current path
+          const currentPath = window.location.pathname;
+          const isPath29 = currentPath.includes("/29");
+
+          // Update wishHtml with conditional classes
           const wishHtml = `
                     <li class="mb-3">
-                        <span class="text-light fst-italic">"${escapeHtml(
-                          wish.guestWish
-                        )}"</span><br>
-                        <strong class="text-primary">${escapeHtml(
-                          wish.guestName
-                        )}</strong>
+                        <span class="${
+                          isPath29 ? "text-light" : "text-contra-brown"
+                        } fst-italic">"${escapeHtml(wish.guestWish)}"</span><br>
+                        <strong class="${
+                          isPath29 ? "text-primary" : "text-brown"
+                        }">${escapeHtml(wish.guestName)}</strong>
                     </li>
                 `;
           wishContainer.append(wishHtml);
@@ -136,9 +141,9 @@ function loadWishes(eventId) {
           randomWishes[Math.floor(Math.random() * randomWishes.length)];
         wishContainer.html(
           `<li class="mb-3">
-            <span class="text-light fst-italic">"${escapeHtml(
-              randomWish.guestWish
-            )}"</span><br>
+            <div class="${
+              isPath29 ? "text-contra-brown" : "text-light"
+            } fst-italic">"${escapeHtml(randomWish.guestWish)}"</div><br>
             <strong class="text-primary">${escapeHtml(
               randomWish.guestName
             )}</strong>

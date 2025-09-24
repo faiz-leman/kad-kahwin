@@ -52,4 +52,12 @@ document.addEventListener("DOMContentLoaded", function () {
       once: true,
     });
   }
+
+  // Path detection and body attribute setting
+  const currentPath = window.location.pathname;
+  if (currentPath.includes("/22")) {
+    document.body.setAttribute("data-path", "22");
+  } else if (currentPath.includes("/29")) {
+    document.body.setAttribute("data-path", "29");
+  }
 });

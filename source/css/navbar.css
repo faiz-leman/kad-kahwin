@@ -35,7 +35,6 @@
   flex-direction: column;
   align-items: center;
   text-decoration: none;
-  color: var(--font-color-secondary);
   font-family: var(--font-sans);
   font-size: 13px;
   transition: all 0.3s ease;
