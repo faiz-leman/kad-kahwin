@@ -13,7 +13,14 @@ function initializeCountdown() {
 }
 
 function updateCountdown() {
-  const weddingDate = new Date("2025-11-29T11:00:00");
+  // Set wedding date based on path
+  let weddingDate;
+  const currentPath = window.location.pathname;
+  if (currentPath.includes("/syukriah-faiz")) {
+    weddingDate = new Date("2025-11-22T11:00:00");
+  } else {
+    weddingDate = new Date("2025-11-29T11:00:00");
+  }
   const now = new Date();
   const difference = weddingDate - now;
 
@@ -80,37 +87,120 @@ function stopAutoScroll() {
   }
 }
 
+// Function to handle opening invitation
+function openInvitation() {
+  const overlay = document.getElementById("openerOverlay");
+  const mainContent = document.getElementById("mainContent");
+  const audio = document.getElementById("audio");
+
+  if (!overlay || !mainContent) {
+    console.error("Opener overlay or main content not found");
+    return;
+  }
+
+  // Hide opener with animation
+  overlay.classList.add("hide");
+
+  // Show main content and start music after animation
+  setTimeout(() => {
+    mainContent.style.opacity = "1";
+
+    // Initialize AOS animations
+    if (typeof AOS !== "undefined") {
+      AOS.init({
+        duration: 800,
+        easing: "ease-out-cubic",
+        once: false,
+        mirror: true,
+        offset: 50,
+        anchorPlacement: "top-bottom",
+        delay: 0,
+        debounceDelay: 50,
+        throttleDelay: 99,
+        disable: false,
+        startEvent: "DOMContentLoaded",
+      });
+    }
+
+    // Auto-play music
+    if (audio) {
+      try {
+        audio
+          .play()
+          .then(() => {
+            // Music started successfully
+            const musicBtn = document.getElementById("musicBtn");
+            const visualizer = document.getElementById("musicVisualizer");
+            if (musicBtn && visualizer) {
+              musicBtn.classList.add("playing");
+              visualizer.classList.add("playing");
+            }
+          })
+          .catch((e) => {
+            // Auto-play failed, user needs to interact first
+            console.log("Auto-play prevented by browser policy");
+          });
+      } catch (e) {
+        console.log("Audio play error:", e);
+      }
+    }
+
+    // Initialize particles
+    if (typeof particlesJS !== "undefined") {
+      // Your particle configuration here
+    }
+
+    // Start auto scroll after opening
+    setTimeout(() => {
+      startAutoScroll();
+    }, 1000);
+  }, 800);
+}
+
 // Initialize when DOM is ready
 document.addEventListener("DOMContentLoaded", function () {
+  // Check if main content exists before trying to hide it
+  const mainContent = document.getElementById("mainContent");
+  if (mainContent) {
+    mainContent.style.opacity = "0";
+  }
+
   initializeCountdown();
   updateCountdown();
 
   // Update countdown every second
   setInterval(updateCountdown, 1000);
 
-  AOS.init({
-    duration: 800,
-    easing: "ease-out-cubic",
-    once: false,
-    mirror: true,
-    offset: 50,
-    anchorPlacement: "top-bottom",
-    delay: 0,
-    debounceDelay: 50,
-    throttleDelay: 99,
-    disable: false,
-    startEvent: "DOMContentLoaded",
-  });
+  // Only initialize AOS if we're not showing the opener
+  const openerOverlay = document.getElementById("openerOverlay");
+  if (!openerOverlay) {
+    // No opener, initialize AOS immediately
+    if (typeof AOS !== "undefined") {
+      AOS.init({
+        duration: 800,
+        easing: "ease-out-cubic",
+        once: false,
+        mirror: true,
+        offset: 50,
+        anchorPlacement: "top-bottom",
+        delay: 0,
+        debounceDelay: 50,
+        throttleDelay: 99,
+        disable: false,
+        startEvent: "DOMContentLoaded",
+      });
+    }
+  }
 
   // Add smooth scroll behavior
   document.documentElement.style.scrollBehavior = "smooth";
 
   // Path detection and body attribute setting
   const currentPath = window.location.pathname;
-  if (currentPath.includes("/22")) {
-    document.body.setAttribute("data-path", "22");
-  } else if (currentPath.includes("/29")) {
-    document.body.setAttribute("data-path", "29");
+  if (currentPath.includes("/syukriah-faiz")) {
+    document.body.setAttribute("data-path", "syukriah-faiz");
+  } else if (currentPath.includes("/faiz-syukriah")) {
+    document.body.setAttribute("data-path", "faiz-syukriah");
   }
 
   // Stop auto scroll on user interaction
@@ -123,10 +213,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Start auto scroll when everything is loaded
 window.addEventListener("load", function () {
-  AOS.refresh();
+  if (typeof AOS !== "undefined") {
+    AOS.refresh();
+  }
 
-  // Start the continuous auto scroll
-  setTimeout(() => {
-    startAutoScroll();
-  }, 1000);
+  // Only start auto scroll if there's no opener overlay
+  const openerOverlay = document.getElementById("openerOverlay");
+  if (!openerOverlay) {
+    setTimeout(() => {
+      startAutoScroll();
+    }, 1000);
+  }
 });

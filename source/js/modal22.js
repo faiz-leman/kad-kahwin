@@ -17,10 +17,10 @@ function openModal(type) {
                             <span class="text-start">Noor Hasyimah</span>
                         </div>
                         <div class="d-flex gap-2">
-                            <a href="tel:+601123164027" class="text-primary">
+                            <a href="tel:+60123437911" class="text-primary">
                                 <i class="bx bx-md bx-phone"></i>
                             </a>
-                            <a href="https://wa.me/601123164027" target="_blank" class="text-primary">
+                            <a href="https://wa.me/60123437911" target="_blank" class="text-primary">
                                 <i class="bx bx-md bxl-whatsapp"></i>
                             </a>
                         </div>
@@ -30,10 +30,10 @@ function openModal(type) {
                             <span class="text-start">Nur Fatini</span>
                         </div>
                         <div class="d-flex gap-2">
-                            <a href="tel:+601123164027" class="text-primary">
+                            <a href="tel:+60193173018" class="text-primary">
                                 <i class="bx bx-md bx-phone"></i>
                             </a>
-                            <a href="https://wa.me/601123164027" target="_blank" class="text-primary">
+                            <a href="https://wa.me/60193173018" target="_blank" class="text-primary">
                                 <i class="bx bx-md bxl-whatsapp"></i>
                             </a>
                         </div>
@@ -43,10 +43,10 @@ function openModal(type) {
                             <span class="text-start">Muhammad Azamuddin</span>
                         </div>
                         <div class="d-flex gap-2">
-                            <a href="tel:+601123164027" class="text-primary">
+                            <a href="tel:+60149773018" class="text-primary">
                                 <i class="bx bx-md bx-phone"></i>
                             </a>
-                            <a href="https://wa.me/601123164027" target="_blank" class="text-primary">
+                            <a href="https://wa.me/60149773018" target="_blank" class="text-primary">
                                 <i class="bx bx-md bxl-whatsapp"></i>
                             </a>
                         </div>

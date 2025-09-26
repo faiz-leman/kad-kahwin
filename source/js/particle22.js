@@ -26,9 +26,9 @@ document.addEventListener("DOMContentLoaded", function () {
         anim: { enable: false, speed: 1, opacity_min: 0.1, sync: false },
       },
       size: {
-        value: 8,
+        value: 9,
         random: true,
-        anim: { enable: false, speed: 40, size_min: 0.1, sync: false },
+        anim: { enable: false, speed: 40, size_min: 1, sync: false },
       },
       line_linked: {
         enable: false,

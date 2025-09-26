@@ -17,7 +17,7 @@ $(document).ready(function () {
 
     var formData = $(this).serialize();
     // Add eventId to form data
-    formData += "&eventId=" + (getEventIdFromScript() || 29);
+    formData += "&eventId=" + (getEventIdFromScript() || "faiz-syukriah");
 
     var spinnerMinTime = 1000;
     var startTime = Date.now();
@@ -44,7 +44,9 @@ $(document).ready(function () {
                 "</div>"
             );
 
-            loadWishes(response.eventId || getEventIdFromScript() || 29);
+            loadWishes(
+              response.eventId || getEventIdFromScript() || "faiz-syukriah"
+            );
 
             // Clear form after successful submission
             $("#rsvpForm")[0].reset();
@@ -92,7 +94,7 @@ function getEventIdFromScript() {
 function loadWishes(eventId) {
   $.ajax({
     // Try absolute path instead of relative path
-    url: "/kad-kahwin/controller/getwish.php?eid=" + eventId,
+    url: "/inv/controller/getwish.php?eid=" + eventId,
     method: "GET",
     dataType: "json",
     success: function (wishes) {
@@ -104,7 +106,7 @@ function loadWishes(eventId) {
         $.each(wishes, function (index, wish) {
           // Detect current path
           const currentPath = window.location.pathname;
-          const isPath29 = currentPath.includes("/29");
+          const isPath29 = currentPath.includes("/faiz-syukriah");
 
           // Update wishHtml with conditional classes
           const wishHtml = `
@@ -152,10 +154,39 @@ function loadWishes(eventId) {
       }
     },
     error: function (xhr, status, error) {
-      console.error("Error fetching wishes:", error);
-      console.error("Response text:", xhr.responseText); // Add this to see actual response
-      $("#guestbook-container ul").html(
-        '<li class="mb-3"><span class="text-light">Gagal memuatkan ucapan.</span></li>'
+      const errorWishes = [
+        { guestName: "Zaid Jalil", guestWish: "Selamat pengantin baru!" },
+        {
+          guestName: "Ahmad Latif",
+          guestWish: "Semoga bahagia hingga ke Jannah.",
+        },
+        {
+          guestName: "Farah Nabihah",
+          guestWish: "Tahniah dan selamat menempuh hidup baru!",
+        },
+        {
+          guestName: "Nurul Jasmin",
+          guestWish: "Moga kekal bahagia selamanya.",
+        },
+        {
+          guestName: "Zikri Himratul",
+          guestWish: "Barakallah, semoga dipermudahkan segalanya.",
+        },
+      ];
+      const randomWish =
+        errorWishes[Math.floor(Math.random() * errorWishes.length)];
+      const wishContainer = $("#guestbook-container ul");
+      const currentPath = window.location.pathname;
+      const isPath29 = currentPath.includes("/faiz-syukriah");
+      wishContainer.html(
+        `<li class="mb-3">
+          <div class="${
+            isPath29 ? "text-contra-brown" : "text-light"
+          } fst-italic">"${escapeHtml(randomWish.guestWish)}"</div><br>
+          <strong class="text-primary">${escapeHtml(
+            randomWish.guestName
+          )}</strong>
+      </li>`
       );
     },
   });

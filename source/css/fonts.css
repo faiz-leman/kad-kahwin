@@ -33,10 +33,19 @@
     format("truetype");
 }
 
+@font-face {
+  font-family: "Allura";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../font/Allura/Allura-Regular.ttf") format("truetype");
+}
+
 :root {
   --font-fancy: "Ephesis", cursive;
   --font-serif: "Bodoni Moda", serif;
   --font-sans: "Quicksand", sans-serif;
+  --font-artistic: "Allura", cursive;
 }
 
 h1 {
@@ -64,6 +73,12 @@ p {
 .name-subpage {
   font-family: var(--font-serif);
   font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.hashtag {
+  font-family: var(--font-artistic);
   font-weight: 400;
   font-style: normal;
 }

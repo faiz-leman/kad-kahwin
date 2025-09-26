@@ -275,6 +275,16 @@ body {
   margin: var(--spacing-lg) 0;
 }
 
+body[data-path="syukriah-faiz"] .divider,
+body[data-path="syukriah-faiz"] .hr-fancy {
+  background: linear-gradient(
+    to right,
+    var(--transparent),
+    var(--font-22-main),
+    var(--transparent)
+  );
+}
+
 .divider--thick {
   height: 4px;
 }
@@ -484,7 +494,7 @@ body {
   z-index: 0;
 }
 
-body[data-path="22"] .hero-section {
+body[data-path="syukriah-faiz"] .hero-section {
   background-image: var(--bg-path-22);
 }
 
@@ -535,7 +545,7 @@ body[data-path="22"] .hero-section {
   z-index: 0;
 }
 
-body[data-path="22"] .tentative-section {
+body[data-path="syukriah-faiz"] .tentative-section {
   background-image: var(--bg-path-22);
 }
 

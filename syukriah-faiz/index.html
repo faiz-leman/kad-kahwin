@@ -28,6 +28,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../source/css/opener.css">
     <link rel="stylesheet" href="../source/css/fonts.css">
     <link rel="stylesheet" href="../source/css/style.css">
 
@@ -57,8 +58,23 @@
 
 <body data-aos-easing="ease-out-cubic" data-aos-duration="800" data-aos-delay="0">
 
+    <div class="opener-overlay" id="openerOverlay">
+        <div class="opener-decoration"></div>
+        <div class="opener-content">
+            <div class="opener-names">
+                <div>Syukriah</div>
+                <div style="font-size: 1.5rem; margin: 0.5rem 0;">&amp;</div>
+                <div>Faiz</div>
+            </div>
+            <button class="opener-btn" onclick="openInvitation()">
+                <i class="bx bxs-heart" style="margin-right: 8px;"></i>
+                Buka
+            </button>
+        </div>
+    </div>
+
     <!-- Main Content -->
-    <div class="main-content bg-light-brown fade-in">
+    <div id="mainContent" class="main-content bg-light-brown fade-in">
 
         <div id="particles-js" class="particles-container"></div>
 
@@ -107,9 +123,9 @@
             <div class="music-bar minimal">
                 <!-- Hidden YouTube player -->
                 <audio id="audio" class="hidden" preload="auto" loop>
-                    <source src="../source/audio/bermuara.mp3" type="audio/mp3">
+                    <source src="../source/audio/bgm22.mp3" type="audio/mp3">
                 </audio>
-                <button id="musicBtn" class="music-btn" title="Bermuara – Mahalini & Rizky Febian" aria-label="Play">
+                <button id="musicBtn" class="music-btn" title="A Thousand Year" aria-label="Play">
                     <div id="musicVisualizer" class="music-visualizer">
                         <div class="visualizer-bar"></div>
                         <div class="visualizer-bar"></div>
@@ -117,7 +133,7 @@
                         <div class="visualizer-bar"></div>
                         <div class="visualizer-bar"></div>
                     </div>
-                    <span class="music-title-visible">Bermuara – Mahalini & Rizky Febian</span>
+                    <span class="music-title-visible text-contra-brown">A Thousand Year (Piano Version)</span>
                 </button>
             </div>
             <section class="fade-in px-2">
@@ -236,19 +252,6 @@
                 </div>
             </section>
 
-            <!-- Replace the gallery image with optimized version -->
-            <section class="fade-in" data-aos="zoom-in" data-aos-delay="0">
-                <div class="gallery my-4 py-2">
-                    <img src="https://www.thekahwin.my/assets/img/dummy/dummy5.webp"
-                        alt="Wedding photo of Faiz and Syukriah" loading="lazy" decoding="async" width="300"
-                        height="400" sizes="(max-width: 768px) 100vw, 300px" srcset="https://www.thekahwin.my/assets/img/dummy/dummy5-small.webp 300w,
-                        https://www.thekahwin.my/assets/img/dummy/dummy5.webp 600w">
-                    <p data-aos="fade-up" data-aos-delay="200">Artwork by <a href="#"
-                            class="brand text-brown fw-bold">The Kahwin</a>
-                    </p>
-                </div>
-            </section>
-
             <section class="fade-in px-2" data-aos="fade-up" data-aos-delay="0">
                 <div class="tentative-card glass-frosted" data-aos="zoom-in" data-aos-delay="100">
                     <span class="fst-italic">Ya Allah, Ya Rahman, Ya Rahim
@@ -258,8 +261,8 @@
                 </div>
             </section>
 
-            <section class="mt-xl mb-xl" data-aos="fade-up" data-aos-delay="0">
-                <h3 class="text-brown">#FaizXSyukriah</h3>
+            <section class="mt-xl mb-xl">
+                <h2 class="hashtag text-brown">Syukriah x Faiz</h2>
             </section>
 
             <section class="mt-xl mb-xl" data-aos="fade-up" data-aos-delay="100">
@@ -277,7 +280,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center" id="dynamicModalContent">
-                    <!-- Dynamic content will be inserted here -->
                 </div>
             </div>
         </div>
@@ -290,7 +292,6 @@
     <script src="../source/js/main.js" defer></script>
     <script src="../source/js/modal22.js" defer></script>
     <script src="../source/js/player.js" defer></script>
-    <!-- <script src="../source/js/autoplay.js" defer></script> -->
 
     <script src="../source/js/particle22.js"></script>
     <script src="../source/js/ajax.js?eventId=29"></script>

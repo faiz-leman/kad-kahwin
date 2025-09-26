@@ -63,6 +63,10 @@
   transition: height 0.3s ease;
 }
 
+body[data-path="syukriah-faiz"] .visualizer-bar {
+  background: #3f3514;
+}
+
 .visualizer-bar:nth-child(1) {
   height: 8px;
 }
