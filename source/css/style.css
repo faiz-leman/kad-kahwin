@@ -131,6 +131,11 @@ body {
   transition: all var(--transition-fast);
 }
 
+body[data-path="faiz-syukriah"] .btn-outline-dark {
+  color: var(--font-color-secondary);
+  border: 1px solid var(--font-color-secondary);
+}
+
 /* Responsive adjustments for .btn-outline-dark */
 @media (max-width: 576px) {
   .btn-outline-dark {
@@ -146,6 +151,11 @@ body {
   transform: translateY(-2px);
   border-radius: var(--radius-md);
   border: 1px solid var(--font-22-main);
+}
+
+body[data-path="faiz-syukriah"] .btn-outline-dark:hover {
+  color: var(--white);
+  background: var(--font-color-secondary);
 }
 
 /* Text Colors */
@@ -277,7 +287,7 @@ body {
   background: linear-gradient(
     to right,
     var(--transparent),
-    var(--primary-color),
+    var(--font-22-fourth),
     var(--transparent)
   );
   margin: var(--spacing-lg) 0;
@@ -344,7 +354,6 @@ body[data-path="syukriah-faiz"] .hr-fancy {
 /* Countdown Card */
 .countdown-card {
   /* background: var(--white); */
-  /* border: 1px solid #e0e0e0; */
   /* border-radius: var(--radius-md); */
   padding: var(--spacing-md);
   /* box-shadow: var(--shadow-sm); */

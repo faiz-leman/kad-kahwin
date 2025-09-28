@@ -67,6 +67,10 @@ body[data-path="syukriah-faiz"] .visualizer-bar {
   background: #3f3514;
 }
 
+body[data-path="faiz-syukriah"] .visualizer-bar {
+  background: var(--font-22-fourth);
+}
+
 .visualizer-bar:nth-child(1) {
   height: 8px;
 }

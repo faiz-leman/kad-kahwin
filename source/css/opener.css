@@ -28,6 +28,10 @@
   padding: 2rem;
 }
 
+body[data-path="faiz-syukriah"] .opener-content {
+  color: var(--font-color-secondary);
+}
+
 .opener-subtitle {
   font-size: 1.5rem;
   margin-bottom: 1rem;
@@ -72,6 +76,15 @@
   background: #654321;
   color: #fff;
   box-shadow: 0 8px 24px rgba(139, 69, 19, 0.25);
+}
+
+body[data-path="faiz-syukriah"] .opener-btn {
+  background: var(--font-color-primary);
+}
+
+body[data-path="faiz-syukriah"] .opener-btn:hover {
+  background: var(--font-22-fourth);
+  color: var(--white);
 }
 
 @keyframes beat {

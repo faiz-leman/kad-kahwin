@@ -49,10 +49,20 @@
   src: url("../font/DM_Serif_Text/DMSerifText-Regular.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "League Spartan";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../font/League_Spartan/static/LeagueSpartan-Regular.ttf")
+    format("truetype");
+}
+
 :root {
   --font-fancy: "Ephesis", cursive;
   --font-serif: "Bodoni Moda", serif;
   --font-sans: "Quicksand", sans-serif;
+  --font-main: "League Spartan", sans-serif;
   --font-artistic: "Allura", cursive;
   --font-credit: "DM Serif Text", serif;
 }
@@ -69,6 +79,12 @@ h2 {
 
 p {
   font-family: var(--font-sans);
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+body[data-path="faiz-syukriah"] p {
+  font-family: var(--font-main);
   font-optical-sizing: auto;
   font-style: normal;
 }

@@ -112,7 +112,7 @@ function loadWishes(eventId) {
           const wishHtml = `
                     <li class="mb-3">
                         <span class="${
-                          isPath29 ? "text-light" : "text-contra-brown"
+                          isPath29 ? "text-contra-brown" : "text-contra-brown"
                         } fst-italic">"${escapeHtml(wish.guestWish)}"</span><br>
                         <strong class="${
                           isPath29 ? "text-primary" : "text-brown"
@@ -144,7 +144,7 @@ function loadWishes(eventId) {
         wishContainer.html(
           `<li class="mb-3">
             <div class="${
-              isPath29 ? "text-contra-brown" : "text-light"
+              isPath29 ? "text-contra-brown" : "text-contra-brown"
             } fst-italic">"${escapeHtml(randomWish.guestWish)}"</div><br>
             <strong class="text-primary">${escapeHtml(
               randomWish.guestName
@@ -181,7 +181,7 @@ function loadWishes(eventId) {
       wishContainer.html(
         `<li class="mb-3">
           <div class="${
-            isPath29 ? "text-contra-brown" : "text-light"
+            isPath29 ? "text-contra-brown" : "text-contra-brown"
           } fst-italic">"${escapeHtml(randomWish.guestWish)}"</div><br>
           <strong class="text-primary">${escapeHtml(
             randomWish.guestName
