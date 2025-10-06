@@ -26,6 +26,9 @@ $start = isset($_POST['start']) ? (int)$_POST['start'] : 0;
 $length = isset($_POST['length']) ? (int)$_POST['length'] : 10;
 if ($length < 1 || $length > 100) $length = 10;
 
+// Get filter status
+$filterStatus = isset($_POST['filterStatus']) ? $_POST['filterStatus'] : 'all';
+
 $search = '';
 if (!empty($_POST['search']['value'])) {
     $search = trim($_POST['search']['value']);
@@ -35,6 +38,16 @@ if (!empty($_POST['search']['value'])) {
 $whereSql = 'WHERE eventId = ?';
 $params = [$eventId];
 $types = 'i';
+
+// Add status filter
+if ($filterStatus === 'attending') {
+    $whereSql .= " AND confirmAttendance = 'y'";
+} elseif ($filterStatus === 'not-attending') {
+    $whereSql .= " AND confirmAttendance = 'n'";
+} elseif ($filterStatus === 'pending') {
+    $whereSql .= " AND (confirmAttendance IS NULL OR confirmAttendance = '')";
+}
+// 'all' means no additional filter
 
 // Add search condition
 if ($search !== '') {
@@ -47,12 +60,56 @@ if ($search !== '') {
     $types .= 'sss';
 }
 
-// Count
+// Count total
 $total = 0;
 if ($stmt = $conn->prepare("SELECT COUNT(*) FROM wish $whereSql")) {
     $stmt->bind_param($types, ...$params);
     $stmt->execute();
     $stmt->bind_result($total);
+    $stmt->fetch();
+    $stmt->close();
+}
+
+// Get statistics for this event (without search filter)
+$stats = [
+    'totalRSVP' => 0,
+    'attending' => 0,
+    'notAttending' => 0,
+    'pending' => 0
+];
+
+// Total RSVP for event
+if ($stmt = $conn->prepare("SELECT COUNT(*) FROM wish WHERE eventId = ?")) {
+    $stmt->bind_param("i", $eventId);
+    $stmt->execute();
+    $stmt->bind_result($stats['totalRSVP']);
+    $stmt->fetch();
+    $stmt->close();
+}
+
+// Attending count
+if ($stmt = $conn->prepare("SELECT COUNT(*) FROM wish WHERE eventId = ? AND confirmAttendance = 'y'")) {
+    $stmt->bind_param("i", $eventId);
+    $stmt->execute();
+    $stmt->bind_result($stats['attending']);
+    $stmt->fetch();
+    $stmt->close();
+}
+
+// Not attending count
+if ($stmt = $conn->prepare("SELECT COUNT(*) FROM wish WHERE eventId = ? AND confirmAttendance = 'n'")) {
+    $stmt->bind_param("i", $eventId);
+    $stmt->execute();
+    $stmt->bind_result($stats['notAttending']);
+    $stmt->fetch();
+    $stmt->close();
+}
+
+// Pending count
+if ($stmt = $conn->prepare("SELECT COUNT(*) FROM wish WHERE eventId = ? AND (confirmAttendance IS NULL OR confirmAttendance = '')")) {
+    $stmt->bind_param("i", $eventId);
+    $stmt->execute();
+    $stmt->bind_result($stats['pending']);
     $stmt->fetch();
     $stmt->close();
 }
@@ -87,6 +144,7 @@ $conn->close();
 echo json_encode([
     'recordsTotal' => $total,
     'recordsFiltered' => $total,
-    'data' => $data
+    'data' => $data,
+    'stats' => $stats
 ]);
 exit;
