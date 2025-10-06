@@ -11,48 +11,43 @@
     <link rel="icon" type="image/png" sizes="16x16" href="https://astrus.my/asset/logo-1080.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="https://astrus.my/asset/logo-1080.ico">
 
-    <!-- Preconnect to external resources (remove Google Fonts) -->
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="preconnect" href="https://unpkg.com">
-    <link rel="preconnect" href="https://www.thekahwin.my">
+    <!-- DNS Prefetch for faster connections -->
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://unpkg.com">
+    <link rel="dns-prefetch" href="https://code.jquery.com">
+
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="preconnect" href="https://code.jquery.com" crossorigin>
 
     <!-- Preload critical fonts first -->
     <link rel="preload" href="../source/font/Ephesis/Ephesis-Regular.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="../source/image/bg29-1.webp" as="image" type="image/webp">
 
-    <!-- External Libraries with defer -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-
-    <!-- Critical CSS - load immediately (fonts.css now loads first for better performance) -->
+    <!-- Critical CSS - load immediately -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../source/css/opener.css">
     <link rel="stylesheet" href="../source/css/fonts.css">
     <link rel="stylesheet" href="../source/css/style.css">
-
-    <!-- Preload critical CSS -->
-    <link rel="preload" href="../source/css/style.css" as="style">
-    <link rel="preload" href="../source/css/fonts.css" as="style">
-
-    <!-- Preload critical JS -->
-    <link rel="preload" href="../source/js/main.js" as="script">
 
     <!-- Non-critical CSS - load asynchronously -->
     <link rel="preload" href="../source/css/navbar.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="../source/css/modal.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="../source/css/player.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://unpkg.com/aos@2.3.1/dist/aos.css" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
 
     <!-- Fallback for browsers that don't support preload -->
     <noscript>
         <link rel="stylesheet" href="../source/css/navbar.css">
         <link rel="stylesheet" href="../source/css/modal.css">
         <link rel="stylesheet" href="../source/css/player.css">
-        <link rel="stylesheet" href="../plugins/boxicons/basic/boxicons.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
     </noscript>
-
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 
 </head>
@@ -60,15 +55,18 @@
 <body data-aos-easing="slide" data-aos-duration="400" data-aos-delay="0">
 
     <div class="opener-overlay" id="openerOverlay">
+        <div class="opener-loader" id="openerLoader">
+            <div class="spinner"></div>
+        </div>
         <div class="opener-decoration"></div>
-        <div class="opener-content">
+        <div class="opener-content" id="openerContent">
             <div class="opener-names">
                 <div>Faiz</div>
                 <div style="font-size: 1.5rem; margin: 0.5rem 0;">&amp;</div>
                 <div>Syukriah</div>
             </div>
             <button class="opener-btn" onclick="openInvitation()">
-                <i class="bx bxs-heart" style="margin-right: 8px;"></i>
+                <i class="bx bx-heart" style="margin-right: 8px;"></i>
                 Buka
             </button>
         </div>
@@ -122,7 +120,7 @@
 
             <div class="music-bar minimal">
                 <!-- Hidden YouTube player -->
-                <audio id="audio" class="hidden" preload="auto" loop>
+                <audio id="audio" class="hidden" preload="none" loop>
                     <source src="../source/audio/bgm29.mp3" type="audio/mp3">
                 </audio>
                 <button id="musicBtn" class="music-btn" title="Sampai Jadi Debu (Saxophone Cover by Dori Wirawan)"
@@ -296,18 +294,25 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery (load with defer) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous" defer></script>
 
-    <!-- Countdown Timer Script -->
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+
+    <!-- Particles -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
+
+    <!-- Your Scripts -->
     <script src="../source/js/main.js" defer></script>
     <script src="../source/js/modal.js" defer></script>
     <script src="../source/js/player.js" defer></script>
+    <script src="../source/js/particle29.js" defer></script>
+    <script src="../source/js/ajax.js?eventId=29" defer></script>
 
-    <script src="../source/js/particle29.js"></script>
-    <script src="../source/js/ajax.js?eventId=29"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <!-- AOS -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js" defer></script>
 
 </body>
 

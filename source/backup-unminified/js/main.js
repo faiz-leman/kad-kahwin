@@ -1,7 +1,21 @@
-// Cache DOM elements for better performance
-let countdownElements = null;
-let isAutoScrolling = false;
-let autoScrollInterval = null;
+window.addEventListener("load", function () {
+  const loader = document.getElementById("openerLoader");
+  const content = document.getElementById("openerContent");
+
+  // Hide loader and show content after page loads
+  setTimeout(() => {
+    loader.classList.add("loaded");
+
+    // Show opener content after loader fades out
+    setTimeout(() => {
+      content.classList.add("show");
+    }, 600);
+  }, 1500);
+});
+
+let countdownElements = null,
+  isAutoScrolling = !1,
+  autoScrollInterval = null;
 
 function initializeCountdown() {
   countdownElements = {
@@ -13,197 +27,133 @@ function initializeCountdown() {
 }
 
 function updateCountdown() {
-  // Set wedding date based on path
-  let weddingDate;
-  const currentPath = window.location.pathname;
-  if (currentPath.includes("/syukriah-faiz")) {
-    weddingDate = new Date("2025-11-22T11:00:00");
-  } else {
-    weddingDate = new Date("2025-11-29T11:00:00");
-  }
-  const now = new Date();
-  const difference = weddingDate - now;
-
-  if (difference > 0) {
-    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((difference / 1000 / 60) % 60);
-    const seconds = Math.floor((difference / 1000) % 60);
-
-    if (countdownElements) {
-      countdownElements.days.textContent = days;
-      countdownElements.hours.textContent = hours;
-      countdownElements.minutes.textContent = minutes;
-      countdownElements.seconds.textContent = seconds;
-    }
-  } else {
-    if (countdownElements) {
-      countdownElements.days.textContent = 0;
-      countdownElements.hours.textContent = 0;
-      countdownElements.minutes.textContent = 0;
-      countdownElements.seconds.textContent = 0;
-    }
-  }
+  let t;
+  t = window.location.pathname.includes("/syukriah-faiz")
+    ? new Date("2025-11-22T11:00:00")
+    : new Date("2025-11-29T11:00:00");
+  const e = t - new Date();
+  if (e > 0) {
+    const t = Math.floor(e / 864e5),
+      n = Math.floor((e / 36e5) % 24),
+      o = Math.floor((e / 1e3 / 60) % 60),
+      l = Math.floor((e / 1e3) % 60);
+    countdownElements &&
+      ((countdownElements.days.textContent = t),
+      (countdownElements.hours.textContent = n),
+      (countdownElements.minutes.textContent = o),
+      (countdownElements.seconds.textContent = l));
+  } else
+    countdownElements &&
+      ((countdownElements.days.textContent = 0),
+      (countdownElements.hours.textContent = 0),
+      (countdownElements.minutes.textContent = 0),
+      (countdownElements.seconds.textContent = 0));
 }
 
-// Auto scroll function that continuously scrolls
 function startAutoScroll() {
-  isAutoScrolling = true;
-  let scrollPosition = 0;
-  const scrollSpeed = 2; // 2 pixels per interval
-  const scrollDelay = 40;
-
-  // Start from top
-  window.scrollTo(0, 0);
-
-  // Wait a moment before starting scroll
-  setTimeout(() => {
-    autoScrollInterval = setInterval(() => {
-      if (!isAutoScrolling) {
-        clearInterval(autoScrollInterval);
-        return;
-      }
-
-      scrollPosition += scrollSpeed;
-      window.scrollTo(0, scrollPosition);
-
-      // Stop when reached bottom
-      const documentHeight = document.documentElement.scrollHeight;
-      const windowHeight = window.innerHeight;
-
-      if (scrollPosition >= documentHeight - windowHeight) {
-        clearInterval(autoScrollInterval);
-        isAutoScrolling = false;
-      }
-    }, scrollDelay);
-  }, 500); // Wait 2 seconds before starting auto scroll
+  isAutoScrolling = !0;
+  let t = 0;
+  window.scrollTo(0, 0),
+    setTimeout(() => {
+      autoScrollInterval = setInterval(() => {
+        if (!isAutoScrolling) return void clearInterval(autoScrollInterval);
+        (t += 2), window.scrollTo(0, t);
+        const e = document.documentElement.scrollHeight,
+          n = window.innerHeight;
+        t >= e - n &&
+          (clearInterval(autoScrollInterval), (isAutoScrolling = !1));
+      }, 40);
+    }, 500);
 }
 
-// Stop auto scroll when user interacts
 function stopAutoScroll() {
-  isAutoScrolling = false;
-  if (autoScrollInterval) {
-    clearInterval(autoScrollInterval);
-  }
+  (isAutoScrolling = !1),
+    autoScrollInterval && clearInterval(autoScrollInterval);
 }
 
-// Function to handle opening invitation
 function openInvitation() {
   const overlay = document.getElementById("openerOverlay");
   const mainContent = document.getElementById("mainContent");
-  const audio = document.getElementById("audio");
 
-  if (!overlay || !mainContent) {
-    console.error("Opener overlay or main content not found");
-    return;
+  // First, make sure main content is visible
+  if (mainContent) {
+    mainContent.style.opacity = "1";
+    mainContent.classList.add("show");
   }
 
-  // Hide opener with animation
-  overlay.classList.add("hide");
+  // Then start the swipe up animation for overlay
+  if (overlay) {
+    overlay.classList.add("hide");
+  }
 
-  // Show main content and start music after animation
+  // Start music and initialize AOS after a delay
   setTimeout(() => {
-    mainContent.style.opacity = "1";
+    // Start music
+    const audio = document.getElementById("audio");
+    if (audio) {
+      audio.play().catch((err) => console.log("Audio play failed:", err));
+    }
 
-    // Initialize AOS animations
+    // Initialize AOS
     if (typeof AOS !== "undefined") {
       AOS.init({
         duration: 800,
-        easing: "ease-out-cubic",
-        once: false,
-        mirror: true,
+        once: true,
         offset: 50,
-        anchorPlacement: "top-bottom",
-        delay: 0,
-        debounceDelay: 50,
-        throttleDelay: 99,
-        disable: false,
-        startEvent: "DOMContentLoaded",
       });
     }
 
-    // Auto-play music
-    if (audio) {
-      try {
-        audio
-          .play()
-          .then(() => {
-            // Music started successfully
-            const musicBtn = document.getElementById("musicBtn");
-            const visualizer = document.getElementById("musicVisualizer");
-            if (musicBtn && visualizer) {
-              musicBtn.classList.add("playing");
-              visualizer.classList.add("playing");
-            }
-          })
-          .catch((e) => {
-            // Auto-play failed, user needs to interact first
-            console.log("Auto-play prevented by browser policy");
-          });
-      } catch (e) {
-        console.log("Audio play error:", e);
-      }
-    }
-
-    // Initialize particles
-    if (typeof particlesJS !== "undefined") {
-      // Your particle configuration here
-    }
-
-    // Start auto scroll after opening
+    // Start auto scroll after everything is loaded
     setTimeout(() => {
       startAutoScroll();
-    }, 1000);
-  }, 800);
+    }, 500);
+  }, 500);
 }
 
-// Initialize when DOM is ready
 document.addEventListener("DOMContentLoaded", function () {
-  // Check if main content exists before trying to hide it
-  const mainContent = document.getElementById("mainContent");
-  if (mainContent) {
-    mainContent.style.opacity = "0";
+  const t = document.getElementById("mainContent");
+  if (t) {
+    t.style.opacity = "0";
   }
 
   initializeCountdown();
   updateCountdown();
+  setInterval(updateCountdown, 1e3);
 
-  // Update countdown every second
-  setInterval(updateCountdown, 1000);
+  const openerExists = document.getElementById("openerOverlay");
 
-  // Only initialize AOS if we're not showing the opener
-  const openerOverlay = document.getElementById("openerOverlay");
-  if (!openerOverlay) {
-    // No opener, initialize AOS immediately
+  if (!openerExists) {
+    // No opener, show content immediately
+    if (t) {
+      t.style.opacity = "1";
+      t.classList.add("show");
+    }
+
     if (typeof AOS !== "undefined") {
       AOS.init({
         duration: 800,
         easing: "ease-out-cubic",
-        once: false,
-        mirror: true,
+        once: !1,
+        mirror: !0,
         offset: 50,
         anchorPlacement: "top-bottom",
         delay: 0,
         debounceDelay: 50,
         throttleDelay: 99,
-        disable: false,
+        disable: !1,
         startEvent: "DOMContentLoaded",
       });
     }
   }
 
-  // Add smooth scroll behavior
   document.documentElement.style.scrollBehavior = "smooth";
 
-  // Path detection and body attribute setting
-  const currentPath = window.location.pathname;
-  if (currentPath.includes("/syukriah-faiz")) {
-    document.body.setAttribute("data-path", "syukriah-faiz");
-  } else if (currentPath.includes("/faiz-syukriah")) {
-    document.body.setAttribute("data-path", "faiz-syukriah");
-  }
+  const e = window.location.pathname;
+  e.includes("/syukriah-faiz")
+    ? document.body.setAttribute("data-path", "syukriah-faiz")
+    : e.includes("/faiz-syukriah") &&
+      document.body.setAttribute("data-path", "faiz-syukriah");
 
-  // Stop auto scroll on user interaction
   document.addEventListener("wheel", stopAutoScroll);
   document.addEventListener("touchstart", stopAutoScroll);
   document.addEventListener("touchmove", stopAutoScroll);
@@ -211,17 +161,15 @@ document.addEventListener("DOMContentLoaded", function () {
   document.addEventListener("click", stopAutoScroll);
 });
 
-// Start auto scroll when everything is loaded
 window.addEventListener("load", function () {
   if (typeof AOS !== "undefined") {
     AOS.refresh();
   }
 
-  // Only start auto scroll if there's no opener overlay
-  const openerOverlay = document.getElementById("openerOverlay");
-  if (!openerOverlay) {
+  const openerExists = document.getElementById("openerOverlay");
+  if (!openerExists) {
     setTimeout(() => {
       startAutoScroll();
-    }, 1000);
+    }, 1e3);
   }
 });
