@@ -1,0 +1,150 @@
+function getEventIdFromScript() {
+  const a = document.getElementsByTagName("script");
+  for (let e of a)
+    if (e.src && e.src.includes("ajax.js")) {
+      return new URL(e.src).searchParams.get("eventId");
+    }
+  return null;
+}
+function loadWishes(a) {
+  $.ajax({
+    url: "/inv/controller/getwish.php?eid=" + a,
+    method: "GET",
+    dataType: "json",
+    success: function (a) {
+      const e = $("#guestbook-container ul");
+      if (a.length > 0)
+        e.empty(),
+          $.each(a, function (a, t) {
+            const s = window.location.pathname.includes("/faiz-syukriah"),
+              n = `\n                    <li class="mb-3">\n                        <span class="text-contra-brown fst-italic">"${escapeHtml(
+                t.guestWish
+              )}"</span><br>\n                        <strong class="${
+                s ? "text-primary" : "text-dark-green"
+              }">${escapeHtml(
+                t.guestName
+              )}</strong>\n                    </li>\n                `;
+            e.append(n);
+          });
+      else {
+        const a = [
+            { guestName: "Ali", guestWish: "Selamat pengantin baru!" },
+            {
+              guestName: "Siti",
+              guestWish: "Semoga bahagia hingga ke Jannah.",
+            },
+            {
+              guestName: "Ahmad",
+              guestWish: "Tahniah dan selamat menempuh hidup baru!",
+            },
+            { guestName: "Nurul", guestWish: "Moga kekal bahagia selamanya." },
+            {
+              guestName: "Zainab",
+              guestWish: "Barakallah, semoga dipermudahkan segalanya.",
+            },
+          ],
+          t = a[Math.floor(Math.random() * a.length)];
+        e.html(
+          `<li class="mb-3">\n            <div class="${
+            (isPath29, "text-contra-brown")
+          } fst-italic">"${escapeHtml(
+            t.guestWish
+          )}"</div><br>\n            <strong class="text-dark-green">${escapeHtml(
+            t.guestName
+          )}</strong>\n        </li>`
+        );
+      }
+    },
+    error: function (a, e, t) {
+      const s = [
+          { guestName: "Zaid Jalil", guestWish: "Selamat pengantin baru!" },
+          {
+            guestName: "Ahmad Latif",
+            guestWish: "Semoga bahagia hingga ke Jannah.",
+          },
+          {
+            guestName: "Farah Nabihah",
+            guestWish: "Tahniah dan selamat menempuh hidup baru!",
+          },
+          {
+            guestName: "Nurul Jasmin",
+            guestWish: "Moga kekal bahagia selamanya.",
+          },
+          {
+            guestName: "Zikri Himratul",
+            guestWish: "Barakallah, semoga dipermudahkan segalanya.",
+          },
+        ],
+        n = s[Math.floor(Math.random() * s.length)],
+        i = $("#guestbook-container ul");
+      window.location.pathname.includes("/faiz-syukriah");
+      i.html(
+        `<li class="mb-3">\n          <div class="text-contra-brown fst-italic">"${escapeHtml(
+          n.guestWish
+        )}"</div><br>\n          <strong class="text-primary">${escapeHtml(
+          n.guestName
+        )}</strong>\n      </li>`
+      );
+    },
+  });
+}
+function escapeHtml(a) {
+  return $("<div>").text(a).html();
+}
+$(document).ready(function () {
+  const a = getEventIdFromScript();
+  loadWishes(a),
+    setInterval(() => loadWishes(a), 3e4),
+    $(document).on("submit", "#rsvpForm", function (a) {
+      a.preventDefault(),
+        $("#submitButton").prop("disabled", !0),
+        $("#submitButtonText").addClass("d-none"),
+        $("#submitSpinner").removeClass("d-none"),
+        $("#rsvpNote").html("").removeClass("d-none");
+      var e = $(this).serialize();
+      e += "&eventId=" + (getEventIdFromScript() || "faiz-syukriah");
+      var t = Date.now();
+      $.ajax({
+        url: "/kad-kahwin/controller/submit.php",
+        type: "POST",
+        data: e,
+        dataType: "json",
+        success: function (a) {
+          var e = 1e3 - (Date.now() - t);
+          e < 0 && (e = 0),
+            setTimeout(function () {
+              $("#submitButton").prop("disabled", !1),
+                $("#submitButtonText").removeClass("d-none"),
+                $("#submitSpinner").addClass("d-none"),
+                a.success
+                  ? ($("#rsvpNote").html(
+                      '<div class="alert alert-success mt-3" role="alert">' +
+                        a.message +
+                        "</div>"
+                    ),
+                    loadWishes(
+                      a.eventId || getEventIdFromScript() || "faiz-syukriah"
+                    ),
+                    $("#rsvpForm")[0].reset())
+                  : $("#rsvpNote").html(
+                      '<div class="alert alert-danger mt-3" role="alert">' +
+                        a.message +
+                        "</div>"
+                    );
+            }, e);
+        },
+        error: function (a, e, s) {
+          var n = 1e3 - (Date.now() - t);
+          n < 0 && (n = 0),
+            setTimeout(function () {
+              $("#rsvpNote").html(
+                '<div class="alert alert-danger mt-3" role="alert">Ralat berlaku. Sila cuba lagi.</div>'
+              ),
+                $("#submitButton").prop("disabled", !1),
+                $("#submitButtonText").removeClass("d-none"),
+                $("#submitSpinner").addClass("d-none");
+            }, n);
+        },
+      });
+    });
+});

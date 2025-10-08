@@ -1,0 +1,221 @@
+.opener-overlay {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--max-width);
+  height: 100%;
+  /* background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px); */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 1s ease;
+  background-image: var("../image/bg29-1.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+body[data-path="syukriah-faiz"] .opener-overlay {
+  background-image: var(--bg-sf-index);
+}
+.opener-overlay.hide {
+  transform: translateX(-50%) translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+.opener-loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10000;
+  opacity: 1;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.opener-loader.loaded {
+  opacity: 0;
+  visibility: hidden;
+}
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(139, 69, 19, 0.2);
+  border-top: 4px solid var(--text-dark-green);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+body[data-path="faiz-syukriah"] .spinner {
+  border: 4px solid rgba(169, 132, 103, 0.2);
+  border-top: 4px solid var(--font-color-primary);
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.opener-content {
+  text-align: center;
+  color: var(--text-dark-green);
+  max-width: 90%;
+  padding: 2rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+.opener-content.show {
+  opacity: 1;
+  visibility: visible;
+}
+body[data-path="faiz-syukriah"] .opener-content {
+  color: var(--font-color-secondary);
+}
+.opener-subtitle {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 400;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.opener-content.show .opener-subtitle {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.2s;
+}
+.opener-names {
+  font-family: Ephesis, cursive;
+  font-size: 3rem;
+  margin: 1.5rem 0;
+}
+.opener-names > div {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.opener-content.show .opener-names > div:first-child {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.4s;
+}
+.opener-content.show .opener-names > div:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.6s;
+}
+.opener-content.show .opener-names > div:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.8s;
+}
+.opener-date {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.opener-content.show .opener-date {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 1s;
+}
+.opener-btn {
+  background: var(--text-dark-green);
+  color: #fff;
+  border: none;
+  padding: 15px 40px;
+  font-size: 1.1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease,
+    transform 0.2s ease, opacity 0.8s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0;
+  transform: translateY(30px) scale(0.9);
+}
+.opener-content.show .opener-btn {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition-delay: 1.2s;
+  animation: beat 2s infinite 2.2s;
+}
+.opener-btn:hover {
+  background: var(--text-light-green);
+  color: #fff;
+  box-shadow: 0 8px 24px var(--text-light-green);
+  transform: translateY(-2px) scale(1.05);
+}
+body[data-path="faiz-syukriah"] .opener-btn {
+  background: var(--font-color-primary);
+}
+body[data-path="faiz-syukriah"] .opener-btn:hover {
+  background: var(--font-22-fourth);
+  color: var(--white);
+}
+@keyframes beat {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  20% {
+    transform: translateY(0) scale(1.08);
+  }
+  40% {
+    transform: translateY(0) scale(0.96);
+  }
+  60% {
+    transform: translateY(0) scale(1.04);
+  }
+  80% {
+    transform: translateY(0) scale(0.98);
+  }
+}
+.opener-decoration {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(
+      circle at 20% 80%,
+      rgba(139, 69, 19, 0.1) 0,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(139, 69, 19, 0.1) 0,
+      transparent 50%
+    );
+  pointer-events: none;
+}
+.main-content {
+  transition: opacity 0.8s ease;
+  opacity: 0;
+}
+.main-content.show {
+  opacity: 1;
+}
+@media (max-width: 768px) {
+  .opener-names {
+    font-size: 2.5rem;
+  }
+  .opener-content {
+    padding: 1rem;
+  }
+  .opener-btn {
+    padding: 12px 30px;
+    font-size: 1rem;
+  }
+}

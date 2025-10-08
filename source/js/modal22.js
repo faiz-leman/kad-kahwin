@@ -1,0 +1,78 @@
+function openModal(n) {
+  const a = document.getElementById("dynamicModal"),
+    e = document.getElementById("dynamicModalLabel"),
+    t = document.getElementById("dynamicModalContent");
+  let s = "",
+    i = "";
+  switch (n) {
+    case "contact":
+      (s = "HUBUNGI"),
+        (i =
+          '\n                <div class="contact-info">\n                    <div class="d-flex justify-content-between align-items-center mb-1 py-2">\n                        <div class="d-flex flex-column">\n                            <span class="text-start">Noor Hasyimah</span>\n                        </div>\n                        <div class="d-flex gap-2">\n                            <a href="tel:+60123437911" class="text-dark-green">\n                                <i class="bx bx-md bx-phone"></i>\n                            </a>\n                            <a href="https://wa.me/60123437911" target="_blank" class="text-dark-green">\n                                <i class="bx bx-md bxl-whatsapp"></i>\n                            </a>\n                        </div>\n                    </div>\n                    <div class="d-flex justify-content-between align-items-center mb-1 py-2">\n                        <div class="d-flex flex-column">\n                            <span class="text-start">Nur Fatini</span>\n                        </div>\n                        <div class="d-flex gap-2">\n                            <a href="tel:+60193173018" class="text-dark-green">\n                                <i class="bx bx-md bx-phone"></i>\n                            </a>\n                            <a href="https://wa.me/60193173018" target="_blank" class="text-dark-green">\n                                <i class="bx bx-md bxl-whatsapp"></i>\n                            </a>\n                        </div>\n                    </div>\n                    <div class="d-flex justify-content-between align-items-center mb-1 py-2">\n                        <div class="d-flex flex-column">\n                            <span class="text-start">Muhammad Azamuddin</span>\n                        </div>\n                        <div class="d-flex gap-2">\n                            <a href="tel:+60149773018" class="text-dark-green">\n                                <i class="bx bx-md bx-phone"></i>\n                            </a>\n                            <a href="https://wa.me/60149773018" target="_blank" class="text-dark-green">\n                                <i class="bx bx-md bxl-whatsapp"></i>\n                            </a>\n                        </div>\n                    </div>\n                </div>\n            ');
+      break;
+    case "rsvp":
+      (s = "RSVP & UCAPAN"),
+        (i =
+          '\n                <div class="rsvp-initial">\n                    <div class="row g-2 mb-4">\n                        <div class="col-6">\n                            <button class="btn btn-success w-100 rsvp-choice-btn" data-choice="hadir">\n                                <i class="bx bx-check"></i>\n                                Hadir\n                            </button>\n                        </div>\n                        <div class="col-6">\n                            <button class="btn btn-outline-secondary w-100 rsvp-choice-btn" data-choice="tidak-hadir">\n                                <i class="bx bx-x"></i>\n                                Tidak Hadir\n                            </button>\n                        </div>\n                    </div>\n                </div>\n            ');
+      break;
+    case "wish":
+      (s = "UCAPAN"),
+        (i =
+          '<form id="rsvpForm" method="post">\n      <input type="hidden" id="rsvpChoice" name="rsvpChoice" value="n">\n      <div id="rsvpForm" class="rsvp-form">\n        <div class="mb-3">\n          <label for="guestName" class="form-label text-start d-block">Nama</label>\n          <input type="text" class="form-control" name="guestName" id="guestName" required>\n        </div>\n        <div class="mb-3">\n          <label for="guestMessage" class="form-label text-start d-block">Ucapan</label>\n          <textarea class="form-control" name="guestWish" id="guestMessage" rows="3" required></textarea>\n        </div>\n        <div class="row g-2">\n          <div class="col-6">\n            <button type="submit" id="submitButton" class="btn btn-success w-100">\n              <span id="submitSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>\n                <span id="submitButtonText">Hantar</span>\n            </button>\n          </div>\n          <div class="col-6">\n            <button class="btn btn-outline-secondary w-100" onclick="backToRSVPChoice()">\n              Batal\n            </button>\n          </div>\n        </div>\n      </div>\n      <div id="rsvpNote" class="d-none"></div>\n    </form>');
+      break;
+    case "location":
+      (s = "LOKASI MAJLIS"),
+        (i =
+          '\n                <div class="location-info">\n                    <h6>Dewan Dataran Dato\' Mohd Said</h6>\n                    <p class="mb-3">\n                        Lot 897, Dataran Dato Mohd Said KM23.5, Jalan KL-Seremban, Jalan Rinching Tengah, 43700\nBeranang, Selangor\n                    </p>\n                    <div class="row g-2">\n                        <div class="col-6">\n                            <a href="https://maps.app.goo.gl/95c7GSbEGpRrFebA6?g_st=ipc" target="_blank" class="btn btn-outline-secondary w-100">\n                                <i class="bx bx-navigation"></i> Google Maps\n                            </a>\n                        </div>\n                        <div class="col-6">\n                            <a href="https://waze.com/ul/hw282tfyzv" target="_blank" class="btn btn-outline-secondary  w-100">\n                                <i class="bx bx-navigation"></i> Waze\n                            </a>\n                        </div>\n                    </div>\n                </div>\n            ');
+      break;
+    case "calendar":
+      (s = "SIMPAN TARIKH"),
+        (i =
+          '\n                <div class="calendar-info">\n                    <div class="mb-3">\n                        <h6>Walimaturus Syukriah & Faiz</h6>\n                        <p>Sabtu, 22 November 2025</p>\n                        <p>11:00 AM - 4:00 PM</p>\n                    </div>\n                      <div class="col-12">\n                          <button class="btn btn-outline-secondary w-100" onclick="addToGoogleCalendar()">\n                              <i class="bx bx-calendar-plus"></i> Google Calendar\n                          </button>\n                      </div>\n                      <div class="col-12 mt-2">\n                          <button class="btn btn-outline-secondary w-100" onclick="addToAppleCalendar()">\n                              <i class="bx bx-calendar-event"></i> Apple Calendar\n                          </button>\n                      </div>\n                </div>\n            ');
+  }
+  (e.textContent = s), (t.innerHTML = i);
+  if ((new bootstrap.Modal(a).show(), "rsvp" === n)) {
+    a.querySelectorAll(".rsvp-choice-btn").forEach((n) => {
+      n.addEventListener("click", function () {
+        showRSVPForm(this.getAttribute("data-choice"));
+      });
+    });
+  }
+}
+function showRSVPForm(n) {
+  let a = "";
+  (a =
+    "hadir" === n
+      ? '\n    <form id="rsvpForm" method="post">\n      <input type="hidden" id="rsvpChoice" name="rsvpChoice" value="y">\n      <div id="rsvpForm" class="rsvp-form">\n        <div class="mb-3">\n          <label for="guestName" class="form-label text-start d-block">Nama</label>\n          <input type="text" class="form-control" name="guestName" id="guestName" required>\n        </div>\n        <div class="mb-3">\n          <label for="attendeeCount" class="form-label text-start d-block">Jumlah Kehadiran</label>\n          <select class="form-control" name="attendeesPax" id="attendeeCount" required>\n            <option value="">-- Pilih Pax --</option>\n            <option value="1">1 orang</option>\n            <option value="2">2 orang</option>\n            <option value="3">3 orang</option>\n            <option value="4">4 orang</option>\n            <option value="5">5 orang</option>\n          </select>\n        </div>\n        <div class="mb-3">\n          <label for="guestMessage" class="form-label text-start d-block">Ucapan</label>\n          <textarea class="form-control" name="guestWish" id="guestMessage" rows="3"></textarea>\n        </div>\n        <div class="row g-2">\n          <div class="col-6">\n            <button type="submit" id="submitButton" class="btn btn-success w-100">\n              <span id="submitSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>\n                <span id="submitButtonText">Hantar</span>\n            </button>\n          </div>\n          <div class="col-6">\n            <button class="btn btn-outline-secondary w-100" onclick="backToRSVPChoice()">\n              Batal\n            </button>\n          </div>\n        </div>\n      </div>\n      <div id="rsvpNote" class="d-none"></div>\n    </form>\n    '
+      : '\n    <form id="rsvpForm" method="post">\n      <input type="hidden" id="rsvpChoice" name="rsvpChoice" value="n">\n      <div id="rsvpForm" class="rsvp-form">\n        <div class="mb-3">\n          <label for="guestName" class="form-label text-start d-block">Nama</label>\n          <input type="text" class="form-control" name="guestName" id="guestName" required>\n        </div>\n        <div class="mb-3">\n          <label for="guestMessage" class="form-label text-start d-block">Ucapan</label>\n          <textarea class="form-control" name="guestWish" id="guestMessage" rows="3" required></textarea>\n        </div>\n        <div class="row g-2">\n          <div class="col-6">\n            <button type="submit" id="submitButton" class="btn btn-success w-100">\n              <span id="submitSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>\n                <span id="submitButtonText">Hantar</span>\n            </button>\n          </div>\n          <div class="col-6">\n            <button class="btn btn-outline-secondary w-100" onclick="backToRSVPChoice()">\n              Batal\n            </button>\n          </div>\n        </div>\n      </div>\n      <div id="rsvpNote" class="d-none"></div>\n\n    '),
+    (document.getElementById("dynamicModalContent").innerHTML = a);
+}
+function backToRSVPChoice() {
+  openModal("rsvp");
+}
+function addToGoogleCalendar() {
+  const n = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
+    "Walimaturus Syukriah & Faiz"
+  )}&dates=20251122T110000/20251122T160000&details=${encodeURIComponent(
+    "Walimaturus Syukriah & Faiz"
+  )}&location=${encodeURIComponent(
+    "Dewan Dataran Dato' Mohd Said, Beranang, Selangor"
+  )}`;
+  window.open(n, "_blank");
+}
+function addToAppleCalendar() {
+  const n = new Blob(
+      [
+        "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Wedding//Wedding Event//EN\nBEGIN:VEVENT\nUID:mfaiz@astrus.my\nDTSTAMP:20251118T120000Z\nDTSTART:20251122T110000\nDTEND:20251122T160000\nSUMMARY:Walimaturus Syukriah & Faiz\nDESCRIPTION:Majlis Perkahwinan Syukriah & Faiz\nLOCATION:Dewan Dataran Dato' Mohd Said, Beranang, Selangor\nEND:VEVENT\nEND:VCALENDAR",
+      ],
+      { type: "text/calendar" }
+    ),
+    a = window.URL.createObjectURL(n),
+    e = document.createElement("a");
+  (e.href = a),
+    (e.download = "wedding-faiz-syukriah.ics"),
+    document.body.appendChild(e),
+    e.click(),
+    document.body.removeChild(e),
+    setTimeout(() => window.URL.revokeObjectURL(a), 1e3);
+}

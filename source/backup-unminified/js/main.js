@@ -1,0 +1,175 @@
+window.addEventListener("load", function () {
+  const loader = document.getElementById("openerLoader");
+  const content = document.getElementById("openerContent");
+
+  // Hide loader and show content after page loads
+  setTimeout(() => {
+    loader.classList.add("loaded");
+
+    // Show opener content after loader fades out
+    setTimeout(() => {
+      content.classList.add("show");
+    }, 600);
+  }, 1500);
+});
+
+let countdownElements = null,
+  isAutoScrolling = !1,
+  autoScrollInterval = null;
+
+function initializeCountdown() {
+  countdownElements = {
+    days: document.getElementById("days"),
+    hours: document.getElementById("hours"),
+    minutes: document.getElementById("minutes"),
+    seconds: document.getElementById("seconds"),
+  };
+}
+
+function updateCountdown() {
+  let t;
+  t = window.location.pathname.includes("/syukriah-faiz")
+    ? new Date("2025-11-22T11:00:00")
+    : new Date("2025-11-29T11:00:00");
+  const e = t - new Date();
+  if (e > 0) {
+    const t = Math.floor(e / 864e5),
+      n = Math.floor((e / 36e5) % 24),
+      o = Math.floor((e / 1e3 / 60) % 60),
+      l = Math.floor((e / 1e3) % 60);
+    countdownElements &&
+      ((countdownElements.days.textContent = t),
+      (countdownElements.hours.textContent = n),
+      (countdownElements.minutes.textContent = o),
+      (countdownElements.seconds.textContent = l));
+  } else
+    countdownElements &&
+      ((countdownElements.days.textContent = 0),
+      (countdownElements.hours.textContent = 0),
+      (countdownElements.minutes.textContent = 0),
+      (countdownElements.seconds.textContent = 0));
+}
+
+function startAutoScroll() {
+  isAutoScrolling = !0;
+  let t = 0;
+  window.scrollTo(0, 0),
+    setTimeout(() => {
+      autoScrollInterval = setInterval(() => {
+        if (!isAutoScrolling) return void clearInterval(autoScrollInterval);
+        (t += 2), window.scrollTo(0, t);
+        const e = document.documentElement.scrollHeight,
+          n = window.innerHeight;
+        t >= e - n &&
+          (clearInterval(autoScrollInterval), (isAutoScrolling = !1));
+      }, 40);
+    }, 500);
+}
+
+function stopAutoScroll() {
+  (isAutoScrolling = !1),
+    autoScrollInterval && clearInterval(autoScrollInterval);
+}
+
+function openInvitation() {
+  const overlay = document.getElementById("openerOverlay");
+  const mainContent = document.getElementById("mainContent");
+
+  // First, make sure main content is visible
+  if (mainContent) {
+    mainContent.style.opacity = "1";
+    mainContent.classList.add("show");
+  }
+
+  // Then start the swipe up animation for overlay
+  if (overlay) {
+    overlay.classList.add("hide");
+  }
+
+  // Start music and initialize AOS after a delay
+  setTimeout(() => {
+    // Start music
+    const audio = document.getElementById("audio");
+    if (audio) {
+      audio.play().catch((err) => console.log("Audio play failed:", err));
+    }
+
+    // Initialize AOS
+    if (typeof AOS !== "undefined") {
+      AOS.init({
+        duration: 800,
+        once: true,
+        offset: 50,
+      });
+    }
+
+    // Start auto scroll after everything is loaded
+    setTimeout(() => {
+      startAutoScroll();
+    }, 500);
+  }, 500);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const t = document.getElementById("mainContent");
+  if (t) {
+    t.style.opacity = "0";
+  }
+
+  initializeCountdown();
+  updateCountdown();
+  setInterval(updateCountdown, 1e3);
+
+  const openerExists = document.getElementById("openerOverlay");
+
+  if (!openerExists) {
+    // No opener, show content immediately
+    if (t) {
+      t.style.opacity = "1";
+      t.classList.add("show");
+    }
+
+    if (typeof AOS !== "undefined") {
+      AOS.init({
+        duration: 800,
+        easing: "ease-out-cubic",
+        once: !1,
+        mirror: !0,
+        offset: 50,
+        anchorPlacement: "top-bottom",
+        delay: 0,
+        debounceDelay: 50,
+        throttleDelay: 99,
+        disable: !1,
+        startEvent: "DOMContentLoaded",
+      });
+    }
+  }
+
+  document.documentElement.style.scrollBehavior = "smooth";
+
+  const e = window.location.pathname;
+  e.includes("/syukriah-faiz")
+    ? document.body.setAttribute("data-path", "syukriah-faiz")
+    : e.includes("/faiz-syukriah") &&
+      document.body.setAttribute("data-path", "faiz-syukriah");
+
+  document.addEventListener("wheel", stopAutoScroll);
+  document.addEventListener("touchstart", stopAutoScroll);
+  document.addEventListener("touchmove", stopAutoScroll);
+  document.addEventListener("keydown", stopAutoScroll);
+  document.addEventListener("click", stopAutoScroll);
+});
+
+window.addEventListener("load", function () {
+  if (typeof AOS !== "undefined") {
+    AOS.refresh();
+  }
+
+  const openerExists = document.getElementById("openerOverlay");
+  if (!openerExists) {
+    setTimeout(() => {
+      startAutoScroll();
+    }, 1e3);
+  }
+});

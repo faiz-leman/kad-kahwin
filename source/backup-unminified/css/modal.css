@@ -1,0 +1,128 @@
+.modal-dialog-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  max-width: 420px;
+  width: 90%;
+  z-index: 1040; /* Lower than navbar */
+}
+
+.modal-content-bottom {
+  border-radius: 20px 20px 20px 20px;
+  border: none;
+  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
+  background: white;
+  margin: 0;
+  bottom: 90px;
+}
+
+.modal-content-bottom .modal-header {
+  padding: 1.5rem 1rem 0.5rem;
+}
+
+.modal-content-bottom .modal-body {
+  padding: 1rem 1.5rem 1rem; /* Reduced bottom padding since we added it to modal-content */
+}
+
+/* Modal backdrop */
+.modal-backdrop.show {
+  display: none;
+}
+
+/* Animation */
+.modal.fade .modal-dialog-bottom {
+  transform: translateY(100%);
+  transition: transform 0.3s ease-out;
+}
+
+.modal.show .modal-dialog-bottom {
+  transform: translateY(0);
+}
+
+/* Ensure the modal doesn't go above the navbar */
+.modal-dialog-bottom {
+  max-height: calc(100vh - 80px); /* Adjust based on your navbar height */
+}
+
+/* Make sure the content is scrollable if needed */
+.modal-content-bottom {
+  max-height: inherit;
+  overflow-y: auto;
+}
+
+.calendar-widget {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 320px;
+}
+
+.calendar-header h5 {
+  font-weight: 600;
+  margin: 0;
+  color: #333;
+}
+
+.calendar-grid {
+  width: 100%;
+}
+
+.calendar-days-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.day-header {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 500;
+  color: #666;
+  padding: 8px 4px;
+}
+
+.calendar-dates {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.date-cell {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  color: #333;
+}
+
+.date-cell:hover {
+  background-color: #e9ecef;
+}
+
+.date-cell.wedding-date {
+  background-color: #000;
+  color: white;
+  font-weight: 600;
+}
+
+.date-cell.next-month {
+  color: #ccc;
+}
+
+.calendar-actions .btn {
+  border-radius: 8px;
+  padding: 12px;
+  font-weight: 500;
+}
+
+.calendar-actions .btn i {
+  margin-right: 8px;
+}

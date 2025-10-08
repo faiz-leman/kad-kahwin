@@ -1,1 +1,4 @@
 *.env
+vendor/
+source/css/style_backup.css
+*.md
