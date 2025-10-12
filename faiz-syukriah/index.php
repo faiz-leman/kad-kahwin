@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- SEO Meta Tags -->
-    <title>Walimaturus | F & S | Syukriah & Faiz</title>
-    <meta property="og:title" content="Walimaturus | F & S | Syukriah &amp; Faiz">
+    <title>Walimaturus | Faiz & Syukriah</title>
+    <meta property="og:title" content="Walimaturus | Faiz & Syukriah">
     <meta property="og:image" content="https://invite.astrus.my/source/image/sf-banner.webp">
 
-    <meta name="twitter:title" content="Walimaturus | F & S | Syukriah &amp; Faiz">
+    <meta name="twitter:title" content="Walimaturus | Faiz & Syukriah">
     <meta name="twitter:image" content="httpshttps://invite.astrus.my/source/image/sf-banner.webp">
     <meta name="og:description" content="Anda dijemput hadir! Tekan link untuk lihat undangan">
     <meta name="twitter:description" content="Anda dijemput hadir! Tekan link untuk lihat undangan">
