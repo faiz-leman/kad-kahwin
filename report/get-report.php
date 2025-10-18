@@ -114,6 +114,44 @@ if ($stmt = $conn->prepare("SELECT COUNT(*) FROM wish WHERE eventId = ? AND (con
     $stmt->close();
 }
 
+// Total Pax sum (for current filter)
+$stats['totalPax'] = 0;
+$paxWhereSql = 'WHERE eventId = ?';
+$paxParams = [$eventId];
+$paxTypes = 'i';
+
+// Apply same status filter as main query
+if ($filterStatus === 'attending') {
+    $paxWhereSql .= " AND confirmAttendance = 'y'";
+} elseif ($filterStatus === 'not-attending') {
+    $paxWhereSql .= " AND confirmAttendance = 'n'";
+} elseif ($filterStatus === 'pending') {
+    $paxWhereSql .= " AND (confirmAttendance IS NULL OR confirmAttendance = '')";
+}
+
+// Add search condition if exists
+if ($search !== '') {
+    $safeSearch = str_replace(['%', '_'], ['\\%', '\\_'], $search);
+    $like = "%{$safeSearch}%";
+    $paxWhereSql .= " AND (guestName LIKE ? OR guestWish LIKE ? OR confirmAttendance LIKE ?)";
+    $paxParams[] = $like;
+    $paxParams[] = $like;
+    $paxParams[] = $like;
+    $paxTypes .= 'sss';
+}
+
+if ($stmt = $conn->prepare("SELECT SUM(CAST(attendeesPax AS UNSIGNED)) FROM wish $paxWhereSql")) {
+    $stmt->bind_param($paxTypes, ...$paxParams);
+    $stmt->execute();
+    $stmt->bind_result($stats['totalPax']);
+    $stmt->fetch();
+    $stmt->close();
+    // If no pax or null, set to 0
+    if ($stats['totalPax'] === null) {
+        $stats['totalPax'] = 0;
+    }
+}
+
 // Fetch rows - including attendance and pax columns
 $sql = "SELECT guestName, guestWish, confirmAttendance, attendeesPax, 
         DATE_FORMAT(createdAt, '%Y-%m-%d %H:%i:%s') AS createdAt

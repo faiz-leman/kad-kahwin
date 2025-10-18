@@ -31,6 +31,7 @@ $stats = [
     'attending' => 0,
     'notAttending' => 0,
     'pending' => 0,
+    'totalPax' => 0,
     'eventId' => $eventId,
     'eventName' => $currentEvent['name']
 ];
@@ -69,6 +70,19 @@ if ($stmt = $conn->prepare("SELECT COUNT(*) FROM wish WHERE eventId = ? AND (con
     $stmt->bind_result($stats['pending']);
     $stmt->fetch();
     $stmt->close();
+}
+
+// Calculate total pax (sum of all attendeesPax)
+if ($stmt = $conn->prepare("SELECT SUM(CAST(attendeesPax AS UNSIGNED)) FROM wish WHERE eventId = ?")) {
+    $stmt->bind_param("i", $eventId);
+    $stmt->execute();
+    $stmt->bind_result($stats['totalPax']);
+    $stmt->fetch();
+    $stmt->close();
+    // If no pax or null, set to 0
+    if ($stats['totalPax'] === null) {
+        $stats['totalPax'] = 0;
+    }
 }
 
 $conn->close();
@@ -126,6 +140,11 @@ $conn->close();
 
         table.dataTable thead th,
         table.dataTable thead td {
+            background-color: #f9fafb !important;
+            color: #4b5563 !important;
+        }
+
+        table.dataTable tfoot td {
             background-color: #f9fafb !important;
             color: #4b5563 !important;
         }
@@ -301,6 +320,12 @@ $conn->close();
             border-color: #374151 !important;
         }
 
+        .dark table.dataTable tfoot td {
+            background-color: #1f2937 !important;
+            color: #d1d5db !important;
+            border-color: #374151 !important;
+        }
+
         .dark table.dataTable tbody tr {
             background-color: #1f2937 !important;
             color: #f9fafb !important;
@@ -461,6 +486,20 @@ $conn->close();
             </div>
         </div>
 
+        <!-- Total Pax Card -->
+        <div class="grid gap-6 mb-8">
+            <div class="bg-white p-6 rounded-2xl shadow-lg text-white">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h6 class="text-sm text-gray-500">Total Pax (Expected Guests)</h6>
+                        <h3 class="text-4xl text-amber-600 font-bold mt-2" id="total-pax"><?= e($stats['totalPax']) ?></h3>
+                        <p class="text-xs text-gray-400 mt-2">Based on current filter</p>
+                    </div>
+                    <div class="text-5xl">👥</div>
+                </div>
+            </div>
+        </div>
+
         <!-- Data Table -->
         <div class="bg-white p-6 rounded-2xl shadow">
             <div class="flex justify-between items-center mb-4">
@@ -468,7 +507,11 @@ $conn->close();
                     <h5 class="text-lg font-semibold text-gray-700">RSVP List</h5>
                     <p class="text-xs text-gray-500 mt-1" id="filter-indicator">Showing: All RSVPs</p>
                 </div>
-                <span class="text-sm text-gray-400">Click cards to filter</span>
+                <!-- <span class="text-sm text-gray-400" id="wishCardLink"></span> -->
+                <button id="viewCard"
+                    class="bg-green-800 text-white font-semi-bold text-sm py-1.5 px-3 rounded focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300 hover:bg-green-500 hover:text-green-900">
+                    View Wishes
+                </button>
             </div>
 
             <div class="overflow-x-auto">
@@ -483,6 +526,13 @@ $conn->close();
                         </tr>
                     </thead>
                     <tbody></tbody>
+                    <tfoot class="bg-gray-50 text-gray-600 font-semibold">
+                        <tr>
+                            <td colspan="3" class="px-4 py-3 text-right">Total Pax:</td>
+                            <td class="px-4 py-3 text-center text-lg text-purple-600" id="table-total-pax">0</td>
+                            <td class="px-4 py-3"></td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
@@ -524,7 +574,14 @@ $conn->close();
             document.getElementById('filter-indicator').textContent = 'Showing: ' + filterTexts[status];
 
             // Reload table with filter
-            wishTable.ajax.reload(function() {
+            wishTable.ajax.reload(function(json) {
+                // Update total pax when filter changes
+                if (json.stats && json.stats.totalPax !== undefined) {
+                    const totalPaxEl = document.getElementById('total-pax');
+                    const tableTotalPaxEl = document.getElementById('table-total-pax');
+                    if (totalPaxEl) totalPaxEl.textContent = json.stats.totalPax || 0;
+                    if (tableTotalPaxEl) tableTotalPaxEl.textContent = json.stats.totalPax || 0;
+                }
                 hideLoader();
             }, false);
         }
@@ -597,6 +654,20 @@ $conn->close();
             });
             document.getElementById('card-all').classList.add('active');
 
+            // Update link in datatable header
+            const viewButton = document.getElementById('viewCard');
+
+            const newButton = viewButton.cloneNode(true);
+            viewButton.parentNode.replaceChild(newButton, viewButton);
+
+            newButton.addEventListener('click', function() {
+                if (eventId === 22) {
+                    window.open('https://invite.astrus.my/syukriah-faiz/', '_blank');
+                } else if (eventId === 29) {
+                    window.open('https://invite.astrus.my/faiz-syukriah/', '_blank');
+                }
+            });
+
             // Update button styles
             document.querySelectorAll('.event-btn').forEach(btn => {
                 btn.classList.remove('bg-blue-600', 'text-white');
@@ -613,11 +684,15 @@ $conn->close();
                     const totalAttendingEl = document.getElementById('total-attending');
                     const totalNotAttendingEl = document.getElementById('total-not-attending');
                     const totalPendingEl = document.getElementById('total-pending');
+                    const totalPaxEl = document.getElementById('total-pax');
+                    const tableTotalPaxEl = document.getElementById('table-total-pax');
 
                     if (totalRsvpEl) totalRsvpEl.textContent = json.stats.totalRSVP;
                     if (totalAttendingEl) totalAttendingEl.textContent = json.stats.attending;
                     if (totalNotAttendingEl) totalNotAttendingEl.textContent = json.stats.notAttending;
                     if (totalPendingEl) totalPendingEl.textContent = json.stats.pending;
+                    if (totalPaxEl) totalPaxEl.textContent = json.stats.totalPax || 0;
+                    if (tableTotalPaxEl) tableTotalPaxEl.textContent = json.stats.totalPax || 0;
                 }
                 // Hide loader after data is loaded
                 hideLoader();
@@ -626,6 +701,15 @@ $conn->close();
 
         $(document).ready(function() {
             // Loader is already visible from page load
+
+            const viewButton = document.getElementById('viewCard');
+            viewButton.addEventListener('click', function() {
+                if (currentEventId === 22) {
+                    window.open('https://invite.astrus.my/syukriah-faiz/', '_blank');
+                } else if (currentEventId === 29) {
+                    window.open('https://invite.astrus.my/faiz-syukriah/', '_blank');
+                }
+            });
 
             const columns = [{
                 data: 'guestName'
@@ -686,6 +770,11 @@ $conn->close();
                 serverSide: true,
                 processing: false, // Disable default processing message
                 initComplete: function(settings, json) {
+                    // Update table footer total pax on init
+                    if (json && json.stats && json.stats.totalPax !== undefined) {
+                        const tableTotalPaxEl = document.getElementById('table-total-pax');
+                        if (tableTotalPaxEl) tableTotalPaxEl.textContent = json.stats.totalPax || 0;
+                    }
                     // Hide loader when table is fully initialized
                     hideLoader();
                 }
